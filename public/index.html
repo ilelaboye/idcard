@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest.json" />
+    <title>BuySimply: Business Buying Simplified</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="<%= BASE_URL %>assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="<%= BASE_URL %>assets/css/style.css" />
+    <style>
+      .toast-success {
+        background-color: green;
+      }
+      .toast-error {
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <strong
+        >BuySimply's website requires the use of JavaScript. For instructions on
+        enabling JavaScript on your browser, please click
+        <a href="https://support.google.com/adsense/answer/12654?hl=en"
+          >here.</a
+        >
+
+        <!-- To access our html homepage, please click here -->
+      </strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/92d9c6f95f.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- <script src="https://unpkg.com/feather-icons"></script> -->
+    <script src="<%= BASE_URL %>assets/js/bootstrap.bundle.min.js"></script>
+    <script src="<%= BASE_URL %>assets/js/main.js"></script>
+    <script src="<%= BASE_URL %>assets/js/jquery.bundle.js?ver=104"></script>
+    <!-- <script src="<%= BASE_URL %>assets/js/script.js?ver=104"></script> -->
+    <script>
+      function ToasterAlert(type, msg) {
+        toastr.options = {
+          closeButton: true,
+          debug: false,
+          newestOnTop: false,
+          progressBar: false,
+          positionClass: "toast-bottom-center",
+          preventDuplicates: false,
+          showDuration: "10000",
+          hideDuration: "10000",
+          timeOut: "10000",
+          extendedTimeOut: "10000",
+        };
+        if (type == "success") {
+          toastr.success(
+            '<em class="fa fa-check toast-message-icon"></em> ' + msg
+          );
+        }
+        if (type == "error") {
+          toastr.error(
+            '<em class="fa fa-exclamation-triangle toast-message-icon"></em>' +
+              msg
+          );
+        }
+        if (type == "info") {
+          toastr.info(
+            '<em class="fa fa-exclamation-circle toast-message-icon"></em>' +
+              msg
+          );
+        }
+      }
+      function SweetAlert(type, msg) {
+        swal("", msg, type); // e.preventDefault();
+      }
+    </script>
+  </body>
+</html>
