@@ -21,7 +21,7 @@
                   <th>Total</th>
                   <th>Wallet Balance</th>
                   <th>Date</th>
-                  <th>View</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody v-if="orders.length > 0">
@@ -156,7 +156,9 @@ export default {
           details: { order_id: this.selectedOrder.id },
         })
         .then(() => {
+          // this.getOrders()
           this.loading = false;
+
           // window.$("#approveModal").modal("hide");
           window.ToasterAlert("success", "Order processed successfully");
 
