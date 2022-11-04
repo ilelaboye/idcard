@@ -35,6 +35,27 @@
       </router-link>
       <a
         class="list-group-item list-group-item-action list-group-item-light px-3"
+        href="https://punchouttest.000webhostapp.com/all_companies.html"
+      >
+        <i class="fab fa-opencart"></i>
+        <span>Companies</span>
+      </a>
+      <a
+        class="list-group-item list-group-item-action list-group-item-light px-3"
+        href="https://punchouttest.000webhostapp.com/transactions.html"
+      >
+        <i class="fab fa-opencart"></i>
+        <span>Transactions</span>
+      </a>
+      <a
+        class="list-group-item list-group-item-action list-group-item-light px-3"
+        href="https://punchouttest.000webhostapp.com/admin_transactions.html"
+      >
+        <i class="fab fa-opencart"></i>
+        <span>Admin Transactions</span>
+      </a>
+      <a
+        class="list-group-item list-group-item-action list-group-item-light px-3"
         href="javascript:void()"
         @click="logout()"
       >

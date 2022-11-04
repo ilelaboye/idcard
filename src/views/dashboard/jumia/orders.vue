@@ -17,6 +17,7 @@
                   <th>Items</th>
                   <th>Shipping</th>
                   <th>Delivery Address</th>
+                  <th>Status</th>
                   <th>Total</th>
                   <th>Wallet Balance</th>
                   <th>Date</th>
@@ -34,6 +35,7 @@
                     <!-- {{ order.merchant == "Jumia" ? "₦" : "$" }} -->
                     ₦{{ formatPrice(order.shipping) }}
                   </td>
+
                   <td>
                     {{ order.delivery_address + order.city + order.state }}
                   </td>
@@ -41,6 +43,14 @@
                     <!-- {{ order.merchant == "Jumia" ? "₦" : "$"
                     }} -->
                     ₦{{ formatPrice(order.total) }}
+                  </td>
+                  <td>
+                    <span v-if="order.status == 1" class="badge badge-primary"
+                      >Awaiting Processing</span
+                    >
+                    <span v-if="order.status == 2" class="badge badge-success"
+                      >processed</span
+                    >
                   </td>
                   <td>₦{{ formatPrice(order.account_balance) }}</td>
                   <td>
@@ -138,14 +148,20 @@ export default {
       this.selectedOrder = order;
     },
     approveOrder() {
-      console.log(this.selectedOrder);
+      this.loading = true;
       this.$store
         .dispatch("post", {
           endpoint: "allorders/jumia/" + this.$store.state.user.id,
           details: { order_id: this.selectedOrder.id },
         })
-        .then((resp) => {
-          console.log(resp);
+        .then(() => {
+          this.loading = false;
+          // window.$("#approveModal").modal("hide");
+          window.ToasterAlert("success", "Order processed successfully");
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         });
     },
   },
