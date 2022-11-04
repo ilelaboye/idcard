@@ -40,11 +40,6 @@
                     {{ order.delivery_address + order.city + order.state }}
                   </td>
                   <td>
-                    <!-- {{ order.merchant == "Jumia" ? "₦" : "$"
-                    }} -->
-                    ₦{{ formatPrice(order.total) }}
-                  </td>
-                  <td>
                     <span v-if="order.status == 1" class="badge badge-primary"
                       >Awaiting Processing</span
                     >
@@ -52,6 +47,12 @@
                       >processed</span
                     >
                   </td>
+                  <td>
+                    <!-- {{ order.merchant == "Jumia" ? "₦" : "$"
+                    }} -->
+                    ₦{{ formatPrice(order.total) }}
+                  </td>
+
                   <td>₦{{ formatPrice(order.account_balance) }}</td>
                   <td>
                     {{ formatDateTime(order.date) }}
