@@ -11,7 +11,7 @@
       </router-link>
       <router-link
         class="list-group-item list-group-item-action list-group-item-light px-3"
-        to="/dashboard"
+        to="/users"
         :class="$route.name == 'users' ? 'active' : ''"
       >
         <i data-feather="users"></i>

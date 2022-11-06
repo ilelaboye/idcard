@@ -59,20 +59,30 @@
                   </td>
 
                   <td>
-                    <button
-                      class="btn btn-purple"
-                      data-bs-toggle="modal"
-                      data-bs-target="#approveModal"
-                      @click="changeOrder(order)"
-                    >
-                      <i class="fas fa-check"></i>
-                    </button>
-                    <!-- <router-link
-                      :to="'order/' + order.order_id"
-                      class="btn-view"
-                    >
-                      <i class="fas fa-eye"></i>
-                    </router-link> -->
+                    <div class="d-flex align-items-center">
+                      <button
+                        class="btn btn-purple"
+                        data-bs-toggle="modal"
+                        data-bs-target="#approveModal"
+                        @click="changeOrder(order)"
+                      >
+                        <i class="fas fa-check"></i>
+                      </button>
+                      <button
+                        class="btn btn-success ms-1"
+                        data-bs-toggle="modal"
+                        data-bs-target="#confirmModal"
+                        @click="changeOrder(order)"
+                      >
+                        <i class="fas fa-check-double"></i>
+                      </button>
+                      <router-link
+                        :to="'order/' + order.order_id"
+                        class="btn btn-view"
+                      >
+                        <i class="fas fa-eye"></i>
+                      </router-link>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -116,6 +126,36 @@
               <span v-if="!loading">Approve</span>
               <span v-else>Loading...</span>
             </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="modal fade"
+      id="confirmModal"
+      tabindex="-1"
+      aria-labelledby="confirmModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 class="modal-title" id="confirmModalLabel">Confirm Order</h6>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="">
+              <div class="form-group">
+                <label for="">Jumia order id</label>
+                <input type="text" class="form-control" id="" />
+              </div>
+              <button class="btn btn-purple">Submit</button>
+            </form>
           </div>
         </div>
       </div>
@@ -176,6 +216,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.btn-success {
+  font-size: 14px;
+}
 table thead tr th {
   color: #5a5f7d;
   background: #f8f9fb;
