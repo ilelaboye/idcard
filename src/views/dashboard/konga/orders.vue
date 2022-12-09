@@ -153,7 +153,7 @@
           <div class="modal-body">
             <form action="">
               <div class="form-group">
-                <label for="">Jumia order id</label>
+                <label for="">Konga order id</label>
                 <input type="text" class="form-control" id="" />
               </div>
               <button class="btn btn-purple">Submit</button>
@@ -180,7 +180,7 @@ export default {
   methods: {
     getOrders() {
       this.$store
-        .dispatch("get", "allorders/jumia/" + this.$store.state.user.id)
+        .dispatch("get", "allorders/konga/" + this.$store.state.user.id)
         .then((resp) => {
           this.loaded = true;
           this.orders = resp.data;
@@ -194,14 +194,14 @@ export default {
       this.loading = true;
       this.$store
         .dispatch("post", {
-          endpoint: "allorders/jumia/" + this.$store.state.user.id,
+          endpoint: "allorders/konga/" + this.$store.state.user.id,
           details: { order_id: this.selectedOrder.id },
         })
         .then(() => {
           // this.getOrders()
           this.loading = false;
 
-          // window.$("#approveModal").modal("hide");
+          window.$("#approveModal").modal("hide");
           window.ToasterAlert("success", "Order processed successfully");
 
           setTimeout(() => {

@@ -20,15 +20,23 @@
       <router-link
         class="list-group-item list-group-item-action list-group-item-light px-3"
         to="/jumia-orders"
-        :class="$route.name == 'jumia-orders' ? 'active' : ''"
+        :class="$route.name == 'jumiaOrders' ? 'active' : ''"
       >
         <i class="fab fa-opencart"></i>
         <span>Jumia Orders</span>
       </router-link>
       <router-link
         class="list-group-item list-group-item-action list-group-item-light px-3"
+        :to="{ name: 'kongaOrders' }"
+        :class="$route.name == 'kongaOrders' ? 'active' : ''"
+      >
+        <i class="fab fa-opencart"></i>
+        <span>Konga Orders</span>
+      </router-link>
+      <router-link
+        class="list-group-item list-group-item-action list-group-item-light px-3"
         to="/amazon-orders"
-        :class="$route.name == 'amazon-orders' ? 'active' : ''"
+        :class="$route.name == 'amazonOrders' ? 'active' : ''"
       >
         <i class="fab fa-amazon"></i>
         <span>Amazon Orders</span>
@@ -40,20 +48,20 @@
         <i class="fab fa-opencart"></i>
         <span>Companies</span>
       </a>
-      <a
+      <router-link
         class="list-group-item list-group-item-action list-group-item-light px-3"
-        href="https://punchouttest.000webhostapp.com/transactions.html"
+        to="/transactions"
       >
         <i class="fab fa-opencart"></i>
         <span>Transactions</span>
-      </a>
-      <a
+      </router-link>
+      <router-link
         class="list-group-item list-group-item-action list-group-item-light px-3"
-        href="https://punchouttest.000webhostapp.com/admin_transactions.html"
+        to="/admin-transactions"
       >
         <i class="fab fa-opencart"></i>
         <span>Admin Transactions</span>
-      </a>
+      </router-link>
       <a
         class="list-group-item list-group-item-action list-group-item-light px-3"
         href="javascript:void()"
