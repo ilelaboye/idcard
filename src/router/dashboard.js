@@ -1,8 +1,13 @@
 import Dashboard from "../views/dashboard/dashboard.vue";
-import JumiaOrders from "../views/dashboard/jumia/orders.vue";
+
 import KongaOrders from "../views/dashboard/konga/orders.vue";
 import AmazonOrders from "../views/dashboard/amazon/orders.vue";
 import Users from "../views/dashboard/user/index.vue";
+import OrderView from "@/views/dashboard/order.vue";
+
+import JumiaLayout from "@/views/dashboard/jumia/layout.vue";
+
+import JumiaRoutes from "./jumia";
 
 const dashboardRoutes = [
   {
@@ -10,11 +15,23 @@ const dashboardRoutes = [
     name: "dashboard",
     component: Dashboard,
   },
+
   {
-    path: "/jumia-orders",
-    name: "jumiaOrders",
-    component: JumiaOrders,
+    path: "jumia",
+    component: JumiaLayout,
+    children: JumiaRoutes,
   },
+  {
+    path: "/order/:id",
+    name: "order",
+    component: OrderView,
+  },
+
+  // {
+  //   path: "/jumia-orders",
+  //   name: "jumiaOrders",
+  //   component: JumiaOrders,
+  // },
   {
     path: "/konga-orders",
     name: "kongaOrders",

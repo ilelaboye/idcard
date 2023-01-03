@@ -77,7 +77,7 @@
                         <i class="fas fa-check-double"></i>
                       </button>
                       <router-link
-                        :to="'order/' + order.order_id"
+                        :to="'/order/' + order.id"
                         class="btn btn-view"
                       >
                         <i class="fas fa-eye"></i>

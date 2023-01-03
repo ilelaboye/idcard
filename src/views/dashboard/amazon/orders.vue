@@ -54,10 +54,7 @@
                     <span class="badge badge-primary" v-else>pending</span>
                   </td>
                   <td>
-                    <router-link
-                      :to="'order/' + order.order_id"
-                      class="btn-view"
-                    >
+                    <router-link :to="'/order/' + order.id" class="btn-view">
                       <i class="fas fa-eye"></i>
                     </router-link>
                   </td>

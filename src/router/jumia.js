@@ -1,28 +1,16 @@
-import Jumia from "../views/dashboard/jumia/index.vue";
-import JumiaProductView from "../views/dashboard/jumia/view.vue";
-import JumiaCart from "../views/dashboard/jumia/cart.vue";
-import JumiaCheckout from "../views/dashboard/jumia/checkout.vue";
+import JumiaOrders from "@/views/dashboard/jumia/orders.vue";
+// import JumiaView from "../views/dashboard/jumia/view.vue";
 
 const JumiaRoutes = [
   {
     path: "/jumia",
-    name: "jumia",
-    component: Jumia,
+    name: "jumiaOrders",
+    component: JumiaOrders,
   },
-  {
-    path: "/jumia/product/:link",
-    name: "jumia-product-view",
-    component: JumiaProductView,
-  },
-  {
-    path: "/jumia/cart",
-    name: "jumia-cart",
-    component: JumiaCart,
-  },
-  {
-    path: "/jumia/checkout",
-    name: "jumia-checkout",
-    component: JumiaCheckout,
-  },
+  // {
+  //   path: "/jumia/order/:id",
+  //   name: "jumia-view",
+  //   component: JumiaView,
+  // },
 ];
 export default JumiaRoutes;
