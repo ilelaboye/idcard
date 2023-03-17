@@ -1,7 +1,18 @@
 <template>
   <div class="orders px-2 py-4 mt-2" v-if="loaded">
     <div class="d-flex justify-content-between align-items-center">
-      <h5 class="card-title mb-0">Users</h5>
+      <div class="main-title">
+        <h6 class="mb-0">Users</h6>
+        <div class="v-line"></div>
+        <div class="search">
+          <input
+            type="text"
+            class="form-control search"
+            placeholder="Search users"
+            v-model="search"
+          />
+        </div>
+      </div>
     </div>
     <div class="orders-body mt-2">
       <div class="card">
@@ -15,12 +26,14 @@
                   <th>Company</th>
                   <th>Company ID</th>
                   <th>Email</th>
+
                   <th>Department</th>
+                  <th>Role</th>
                   <th>No of Order</th>
                 </tr>
               </thead>
-              <tbody v-if="users.length > 0">
-                <tr v-for="(user, index) in users" :key="index">
+              <tbody v-if="filteredList.length > 0">
+                <tr v-for="(user, index) in filteredList" :key="index">
                   <td>{{ ++index }}</td>
                   <td>{{ user.last_name }} {{ user.first_name }}</td>
 
@@ -30,6 +43,7 @@
                   <td>
                     {{ user.department }}
                   </td>
+                  <td>{{ user.role_id }}</td>
                   <td>{{ user.orderCount }}</td>
                 </tr>
               </tbody>
@@ -49,12 +63,26 @@
 import NoData from "@/components/dashboard/noData.vue";
 export default {
   components: { NoData },
+  computed: {
+    filteredList() {
+      return this.users.filter((user) => {
+        return (
+          user.first_name.toLowerCase().includes(this.search.toLowerCase()) ||
+          user.last_name.toLowerCase().includes(this.search.toLowerCase()) ||
+          user.email.toLowerCase().includes(this.search.toLowerCase()) ||
+          user.company_name.toLowerCase().includes(this.search.toLowerCase()) ||
+          user.role_id.toLowerCase().includes(this.search.toLowerCase())
+        );
+      });
+    },
+  },
   data() {
     return {
       loading: false,
       users: [],
       selectedOrder: {},
       loaded: false,
+      search: "",
     };
   },
   methods: {
@@ -77,6 +105,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.main-title .v-line {
+  border: 1px solid #ced4da;
+  background: #ced4da;
+  height: 36px;
+  width: 0.1px;
+  margin: 0 30px;
+}
+.search {
+  border-radius: 30px;
+  outline: none;
+  font-size: 14px;
+  height: 40px;
+  width: 20em;
+}
 .btn-success {
   font-size: 14px;
 }

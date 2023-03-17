@@ -6,7 +6,7 @@
         to="/dashboard"
         :class="$route.name == 'dashboard' ? 'active' : ''"
       >
-        <i data-feather="home"></i>
+        <i class="fas fa-home"></i>
         <span>Dashboard</span>
       </router-link>
       <router-link
@@ -14,9 +14,58 @@
         to="/users"
         :class="$route.name == 'users' ? 'active' : ''"
       >
-        <i data-feather="users"></i>
+        <i class="fas fa-users"></i>
         <span>Users</span>
       </router-link>
+      <a
+        class="list-group-item list-group-item-action list-group-item-light px-3"
+        href="https://punchouttest.000webhostapp.com/admin_allcoyusers.html"
+        target="_blank"
+      >
+        <i class="fas fa-users"></i>
+        <span>Company Users</span>
+      </a>
+      <router-link
+        class="list-group-item list-group-item-action list-group-item-light px-3"
+        :to="{ name: 'companies' }"
+        :class="$route.name == 'companies' ? 'active' : ''"
+      >
+        <i class="fa fa-building"></i>
+        <span>Companies</span>
+      </router-link>
+      <a
+        class="list-group-item list-group-item-action list-group-item-light px-3"
+        href="https://punchouttest.000webhostapp.com/admin_allcoytransactions.html"
+        target="_blank"
+      >
+        <i class="fa fa-exchange"></i>
+        <span>Companies Transactions</span>
+      </a>
+      <a
+        class="list-group-item list-group-item-action list-group-item-light px-3"
+        href="https://punchouttest.000webhostapp.com/admin_allpayments.html"
+        target="_blank"
+      >
+        <i class="fa fa-credit-card"></i>
+        <span>All Payments</span>
+      </a>
+      <a
+        class="list-group-item list-group-item-action list-group-item-light px-3"
+        href="https://punchouttest.000webhostapp.com/clanApproved.html"
+        target="_blank"
+      >
+        <i class="fas fa-thumbs-up"></i>
+        <span>Clan Approved Transactions</span>
+      </a>
+      <a
+        class="list-group-item list-group-item-action list-group-item-light px-3"
+        href="https://punchouttest.000webhostapp.com/clanPending.html"
+        target="_blank"
+      >
+        <i class="fas fa-thumbs-down"></i>
+        <span>Clan Pending Transactions</span>
+      </a>
+
       <router-link
         class="list-group-item list-group-item-action list-group-item-light px-3"
         to="/jumia-orders"
@@ -41,13 +90,7 @@
         <i class="fab fa-amazon"></i>
         <span>Amazon Orders</span>
       </router-link>
-      <a
-        class="list-group-item list-group-item-action list-group-item-light px-3"
-        href="https://punchouttest.000webhostapp.com/all_companies.html"
-      >
-        <i class="fab fa-opencart"></i>
-        <span>Companies</span>
-      </a>
+
       <router-link
         class="list-group-item list-group-item-action list-group-item-light px-3"
         to="/transactions"

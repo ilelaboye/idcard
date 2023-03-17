@@ -8,6 +8,7 @@ import OrderView from "@/views/dashboard/order.vue";
 import JumiaLayout from "@/views/dashboard/jumia/layout.vue";
 
 import JumiaRoutes from "./jumia";
+import CompanyRoutes from "./company";
 
 const dashboardRoutes = [
   {
@@ -20,6 +21,11 @@ const dashboardRoutes = [
     path: "jumia",
     component: JumiaLayout,
     children: JumiaRoutes,
+  },
+  {
+    path: "companies",
+    component: () => import("@/views/dashboard/company/layout.vue"),
+    children: CompanyRoutes,
   },
   {
     path: "/order/:id",
