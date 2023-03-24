@@ -211,6 +211,7 @@ export default {
     },
   },
   created() {
+    console.log("jjjfj");
     console.log(this.$store.state.user);
     this.getOrders();
   },

@@ -3,7 +3,7 @@ import JumiaOrders from "@/views/dashboard/jumia/orders.vue";
 
 const JumiaRoutes = [
   {
-    path: "/jumia",
+    path: "/jumia-orders",
     name: "jumiaOrders",
     component: JumiaOrders,
   },
