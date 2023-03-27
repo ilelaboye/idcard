@@ -59,8 +59,8 @@ const dashboardRoutes = [
     component: () => import("@/views/dashboard/transactions/index.vue"),
   },
   {
-    path: "/demo",
-    name: "demo",
+    path: "/demo-requests",
+    name: "demoRequests",
     component: () => import("@/views/dashboard/demo/index.vue"),
   },
   {

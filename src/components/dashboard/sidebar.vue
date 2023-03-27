@@ -33,6 +33,14 @@
         <i class="fa fa-building"></i>
         <span>Companies</span>
       </router-link>
+      <router-link
+        class="list-group-item list-group-item-action list-group-item-light px-3"
+        :to="{ name: 'demoRequests' }"
+        :class="$route.name == 'demoRequests' ? 'active' : ''"
+      >
+        <i class="fa fa-question"></i>
+        <span>Demo Requests</span>
+      </router-link>
       <a
         class="list-group-item list-group-item-action list-group-item-light px-3"
         href="https://punchouttest.000webhostapp.com/admin_allcoytransactions.html"

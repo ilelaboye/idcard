@@ -1,7 +1,7 @@
 <template>
   <div class="orders px-2 py-4 mt-2" v-if="loaded">
     <div class="d-flex justify-content-between align-items-center">
-      <h5 class="card-title mb-0">demo</h5>
+      <h5 class="card-title mb-0">Demo Requests</h5>
     </div>
     <div class="orders-body mt-2">
       <div class="card">
