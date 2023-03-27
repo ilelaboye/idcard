@@ -11,7 +11,6 @@ export default {
       var hold = value.toString();
       hold = hold.replace("₦", "");
       hold = hold.replace(",", "");
-      // console.log(parseFloat(hold).toFixed(2));
       return parseFloat(hold).toFixed(2);
     },
     formatPrice(value) {
