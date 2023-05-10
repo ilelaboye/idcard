@@ -40,7 +40,7 @@ export default {
   created() {
     this.$store.commit("getCart");
     if (this.$route.query.search) {
-      this.$store.state.jumiaSearch = this.$route.query.search;
+      this.$store.state.jumiaSearch = this.$query.search;
       this.search = this.$route.query.search;
     }
   },

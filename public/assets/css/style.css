@@ -45,7 +45,10 @@ table tbody tr td {
   font-size: 17px;
 }
 .btn-view {
-  color: #adb4d2;
+  padding: 6px;
+  line-height: 1;
+  color: #0d6efd;
+  background-color: #0d6efd30;
   border: none;
 }
 .badge {
@@ -343,6 +346,22 @@ table tbody tr td {
 .page-item {
   margin-right: 5px;
 }
+
+.main-title .v-line {
+  border: 1px solid #ced4da;
+  background: #ced4da;
+  height: 36px;
+  width: 0.1px;
+  margin: 0 30px;
+}
+.search {
+  border-radius: 30px;
+  outline: none;
+  font-size: 14px;
+  height: 40px;
+  width: 20em;
+}
+
 @media (min-width: 576px) {
   .toast-message {
     font-size: 14px;

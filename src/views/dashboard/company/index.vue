@@ -1,7 +1,18 @@
 <template>
   <div class="orders px-2 py-4 mt-2" v-if="loaded">
     <div class="d-flex justify-content-between align-items-center">
-      <h5 class="card-title mb-0">Companies</h5>
+      <div class="main-title">
+        <h6 class="mb-0">Company</h6>
+        <div class="v-line"></div>
+        <div class="search">
+          <input
+            type="text"
+            class="form-control search"
+            placeholder="Search company"
+            v-model="search"
+          />
+        </div>
+      </div>
     </div>
     <div class="orders-body mt-2">
       <div class="card">
@@ -10,6 +21,7 @@
             <table class="table">
               <thead>
                 <tr>
+                  <th>Action</th>
                   <th>Name</th>
                   <th>Slug</th>
                   <th>Account No</th>
@@ -29,8 +41,15 @@
                   <th>Total Amount spent on Orders including fees</th>
                 </tr>
               </thead>
-              <tbody v-if="companies.length > 0">
-                <tr v-for="(company, index) in companies" :key="index">
+              <tbody v-if="filteredList.length > 0">
+                <tr v-for="(company, index) in filteredList" :key="index">
+                  <td>
+                    <router-link
+                      class="btn btn-view"
+                      :to="{ name: 'companyView', params: { id: company.id } }"
+                      ><i class="fa fa-eye"></i
+                    ></router-link>
+                  </td>
                   <td>{{ company.company_name }}</td>
                   <td>{{ company.company_slug }}</td>
                   <td>{{ company.account_number }}</td>
@@ -90,13 +109,28 @@
 import NoData from "@/components/dashboard/noData.vue";
 export default {
   components: { NoData },
+  computed: {
+    filteredList() {
+      return this.companies.filter((company) => {
+        // console.log(company.company_slug);
+        return (
+          company.company_name
+            .toLowerCase()
+            .includes(this.search.toLowerCase()) ||
+          company.company_slug.toString().includes(this.search.toLowerCase())
+        );
+      });
+    },
+  },
   data() {
     return {
       loading: false,
       companies: [],
       loaded: false,
+      search: "",
     };
   },
+
   methods: {
     getCompanies() {
       this.$store.commit("setLoader", true);
@@ -106,7 +140,7 @@ export default {
           this.$store.commit("setLoader", false);
           this.loaded = true;
           this.companies = resp.data;
-          console.log(resp.data);
+          // console.log(this.companies);
         })
         .catch(() => {
           this.$store.commit("setLoader", false);

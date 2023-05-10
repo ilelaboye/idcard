@@ -105,20 +105,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.main-title .v-line {
-  border: 1px solid #ced4da;
-  background: #ced4da;
-  height: 36px;
-  width: 0.1px;
-  margin: 0 30px;
-}
-.search {
-  border-radius: 30px;
-  outline: none;
-  font-size: 14px;
-  height: 40px;
-  width: 20em;
-}
 .btn-success {
   font-size: 14px;
 }
