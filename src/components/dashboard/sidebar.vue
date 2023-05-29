@@ -17,14 +17,6 @@
         <i class="fas fa-users"></i>
         <span>Users</span>
       </router-link>
-      <a
-        class="list-group-item list-group-item-action list-group-item-light px-3"
-        href="https://punchouttest.000webhostapp.com/admin_allcoyusers.html"
-        target="_blank"
-      >
-        <i class="fas fa-users"></i>
-        <span>Company Users</span>
-      </a>
       <router-link
         class="list-group-item list-group-item-action list-group-item-light px-3"
         :to="{ name: 'companies' }"
@@ -41,38 +33,69 @@
         <i class="fa fa-question"></i>
         <span>Demo Requests</span>
       </router-link>
-      <a
-        class="list-group-item list-group-item-action list-group-item-light px-3"
-        href="https://punchouttest.000webhostapp.com/admin_allcoytransactions.html"
-        target="_blank"
-      >
-        <i class="fa fa-exchange"></i>
-        <span>Companies Transactions</span>
-      </a>
-      <a
-        class="list-group-item list-group-item-action list-group-item-light px-3"
-        href="https://punchouttest.000webhostapp.com/admin_allpayments.html"
-        target="_blank"
-      >
-        <i class="fa fa-credit-card"></i>
-        <span>All Payments</span>
-      </a>
-      <a
-        class="list-group-item list-group-item-action list-group-item-light px-3"
-        href="https://punchouttest.000webhostapp.com/clanApproved.html"
-        target="_blank"
-      >
-        <i class="fas fa-thumbs-up"></i>
-        <span>Clan Approved Transactions</span>
-      </a>
-      <a
-        class="list-group-item list-group-item-action list-group-item-light px-3"
-        href="https://punchouttest.000webhostapp.com/clanPending.html"
-        target="_blank"
-      >
-        <i class="fas fa-thumbs-down"></i>
-        <span>Clan Pending Transactions</span>
-      </a>
+      <div>
+        <a
+          href="#usersCollapse"
+          class="list-group-item list-group-item-action list-group-item-light px-3"
+          data-bs-toggle="collapse"
+          :class="
+            $route.name == 'users' || $route.name == 'usersRequest'
+              ? 'active'
+              : ''
+          "
+          role="button"
+          aria-expanded="false"
+          aria-controls="collapseExample"
+        >
+          <i class="fas fa-thumbs-up"></i>
+          <div class="d-flex justify-content-between w-100">
+            <span>Clan Transactions</span>
+            <svg
+              version="1.1"
+              id="Layer_1"
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              x="0px"
+              y="0px"
+              viewBox="0 0 407.436 407.436"
+              style="enable-background: new 0 0 407.436 407.436"
+              xml:space="preserve"
+            >
+              <polygon
+                points="112.814,0 91.566,21.178 273.512,203.718 91.566,386.258 112.814,407.436 315.869,203.718 "
+                fill="#000000"
+                style="fill: rgb(99, 100, 100)"
+              ></polygon>
+            </svg>
+          </div>
+        </a>
+        <div class="pa-dropd">
+          <ul class="collapse nav flex-column ms-1" id="usersCollapse">
+            <li class="w-100">
+              <router-link
+                :to="{ name: 'clanPendingTransactions' }"
+                class="nav-link"
+                :class="
+                  $route.name == 'clanPendingTransactions' ? 'active' : ''
+                "
+              >
+                Pending</router-link
+              >
+            </li>
+            <li>
+              <router-link
+                :to="{ name: 'clanApprovedTransactions' }"
+                class="nav-link"
+                :class="
+                  $route.name == 'clanApprovedTransactions' ? 'active' : ''
+                "
+              >
+                Approved
+              </router-link>
+            </li>
+          </ul>
+        </div>
+      </div>
 
       <router-link
         class="list-group-item list-group-item-action list-group-item-light px-3"
@@ -155,6 +178,23 @@ export default {
     color: #fff;
     font-size: 13px;
     margin-left: 10px;
+  }
+  .pa-dropd {
+    .nav-link {
+      display: block;
+      padding-left: 62px;
+      color: #636464;
+      font-size: 14px;
+      &:hover {
+        color: #272b41;
+        background-color: #f0f3ff;
+        // border-radius: 6px;
+      }
+      &.active {
+        color: #272b41;
+        background-color: #f0f3ff !important;
+      }
+    }
   }
   .dash-logo {
     width: 180px;

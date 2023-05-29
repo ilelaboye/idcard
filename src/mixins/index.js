@@ -7,17 +7,14 @@ export default {
       return roles.some((item) => item == value);
     },
 
-    parsePrice(value) {
-      var hold = value.toString();
-      hold = hold.replace("₦", "");
-      hold = hold.replace(",", "");
-      return parseFloat(hold).toFixed(2);
-    },
     formatPrice(value) {
       return new Intl.NumberFormat().format(value);
     },
     formatDateTime(value) {
       return new Date(value).toDateString();
+    },
+    formatDateToLocalDate(value) {
+      return new Date(value).toLocaleDateString();
     },
     formatDateTimeSecond(value) {
       let m = new Date(value);

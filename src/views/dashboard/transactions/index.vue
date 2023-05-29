@@ -28,48 +28,26 @@
                   <th>Has Been Posted</th>
                 </tr>
               </thead>
-              <tbody v-if="transactions.company_transactions.length > 0">
-                <tr
-                  v-for="(transact, index) in transactions.company_transactions"
-                  :key="index"
-                >
-                  <td>{{ ++index }}</td>
-                  <td>{{ transact.amount }}</td>
-                  <td>{{ transact.transact_by }}</td>
-                  <td>{{ transact.company_name }}</td>
-                  <td>{{ transact.products }} products</td>
+              <tbody v-if="transactions.length > 0">
+                <tr v-for="(transact, index) in transactions" :key="index">
+                  <td>₦{{ formatPrice(transact.amount) }}</td>
+                  <td>{{ transact.account_number }}</td>
+                  <td>{{ transact.transaction_payload.craccountname }}</td>
                   <td>
-                    <!-- {{ transact.merchant == "Jumia" ? "₦" : "$" }} -->
-                    ₦{{ formatPrice(transact.shipping) }}
+                    {{ transact.transaction_payload.originatoraccountnumber }}
                   </td>
-
-                  <td>
-                    {{
-                      transact.delivery_address + transact.city + transact.state
-                    }}
-                  </td>
-                  <td>
-                    <span
-                      v-if="transact.status == 1"
-                      class="badge badge-primary"
-                      >Awaiting Processing</span
-                    >
-                    <span
-                      v-if="transact.status == 2"
-                      class="badge badge-success"
-                      >processed</span
-                    >
-                  </td>
-                  <td>
-                    <!-- {{ transact.merchant == "Jumia" ? "₦" : "$"
-                    }} -->
-                    ₦{{ formatPrice(transact.total) }}
-                  </td>
-
-                  <td>₦{{ formatPrice(transact.account_balance) }}</td>
-                  <td>
-                    {{ formatDateTime(transact.date) }}
-                  </td>
+                  <td>{{ transact.transaction_payload.originatorname }}</td>
+                  <td>{{ transact.transaction_payload.narration }}</td>
+                  <td>{{ transact.transaction_payload.bankname }}</td>
+                  <td>{{ transact.transaction_payload.currency }}</td>
+                  <td>{{ formatDateTime(transact.date_added) }}</td>
+                  <td>{{ formatDateTime(transact.date_modified) }}</td>
+                  <td>{{ transact.session_id }}</td>
+                  <td>{{ transact.transaction_reference }}</td>
+                  <td>{{ transact.is_verified }}</td>
+                  <td>{{ transact.posted_to_wallet }}</td>
+                  <td>{{ transact.check_for_split_payment }}</td>
+                  <td>{{ transact.has_been_posted }}</td>
                 </tr>
               </tbody>
               <NoData
@@ -86,6 +64,7 @@
 
 <script>
 // import NoData from "@/components/dashboard/noData.vue";
+import axio from "axios";
 export default {
   // components: { NoData },
   data() {
@@ -97,12 +76,26 @@ export default {
   },
   methods: {
     getTransactions() {
-      this.$store
-        .dispatch("get", "alltransactions/" + this.$store.state.user.id)
+      this.$store.commit("setLoader", true);
+      axio
+        .post(
+          "https://wema.creditclan.com/api/v3/wema/bsmptransactions/",
+          { start: 0, account_number: "", start_date: "", end_date: "" },
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          }
+        )
         .then((resp) => {
+          this.$store.commit("setLoader", false);
           this.loaded = true;
-          this.transactions = resp.data;
+          this.transactions = resp.data.records;
           console.log(resp);
+        })
+        .catch((err) => {
+          this.$store.dispatch("handleError", err);
         });
     },
   },

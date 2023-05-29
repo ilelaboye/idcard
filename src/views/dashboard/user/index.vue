@@ -66,13 +66,16 @@ export default {
   computed: {
     filteredList() {
       return this.users.filter((user) => {
-        return (
-          user.first_name.toLowerCase().includes(this.search.toLowerCase()) ||
-          user.last_name.toLowerCase().includes(this.search.toLowerCase()) ||
-          user.email.toLowerCase().includes(this.search.toLowerCase()) ||
-          user.company_name.toLowerCase().includes(this.search.toLowerCase()) ||
-          user.role_id.toLowerCase().includes(this.search.toLowerCase())
-        );
+        return user.first_name
+          ? user.first_name.toLowerCase().includes(this.search.toLowerCase())
+          : null || user.last_name
+          ? user.last_name.toLowerCase().includes(this.search.toLowerCase())
+          : null ||
+            user.email.toLowerCase().includes(this.search.toLowerCase()) ||
+            user.company_name
+              .toLowerCase()
+              .includes(this.search.toLowerCase()) ||
+            user.role_id.toLowerCase().includes(this.search.toLowerCase());
       });
     },
   },
@@ -94,7 +97,7 @@ export default {
           this.loaded = true;
           this.$store.commit("setLoader", false);
           this.users = resp.data.users;
-          console.log(resp);
+          console.log(this.users);
         });
     },
   },

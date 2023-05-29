@@ -69,5 +69,15 @@ const dashboardRoutes = [
     component: () =>
       import("@/views/dashboard/transactions/admin_transactions.vue"),
   },
+  {
+    name: "clanPendingTransactions",
+    path: "/clan/pending-transactions",
+    component: () => import("@/views/dashboard/clan/pending.vue"),
+  },
+  {
+    name: "clanApprovedTransactions",
+    path: "/clan/approved-transactions",
+    component: () => import("@/views/dashboard/clan/approved.vue"),
+  },
 ];
 export default dashboardRoutes;

@@ -58,7 +58,6 @@
                     {{ company.rc_number }}
                   </td>
                   <td>
-                    {{ company.verification_status }}
                     <span
                       class="badge badge-success"
                       v-if="company.verification_status == 1"
@@ -140,7 +139,7 @@ export default {
           this.$store.commit("setLoader", false);
           this.loaded = true;
           this.companies = resp.data;
-          // console.log(this.companies);
+          console.log(this.companies);
         })
         .catch(() => {
           this.$store.commit("setLoader", false);
