@@ -20,5 +20,8 @@ export default {
       let m = new Date(value);
       return m.toUTCString().replace("GMT", "");
     },
+    roundUpAmount(value, fixed = 2) {
+      return value ? parseFloat(value.toString()).toFixed(fixed) : 0;
+    },
   },
 };

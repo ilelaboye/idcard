@@ -9,7 +9,7 @@
       <ul class="nav nav-pills my-3" id="pills-tab" role="tablist">
         <li class="nav-item" role="presentation">
           <button
-            class="nav-link"
+            class="nav-link active"
             id="pills-details-tab"
             data-bs-toggle="pill"
             data-bs-target="#pills-details"
@@ -23,7 +23,7 @@
         </li>
         <li class="nav-item" role="presentation">
           <button
-            class="nav-link active"
+            class="nav-link"
             id="pills-users-tab"
             data-bs-toggle="pill"
             data-bs-target="#pills-users"
@@ -66,15 +66,304 @@
       </ul>
       <div class="tab-content" id="pills-tabContent">
         <div
-          class="tab-pane fade"
+          class="tab-pane fade show active"
           id="pills-details"
           role="tabpanel"
           aria-labelledby="pills-details-tab"
         >
           <h4 class="card-title">Company details</h4>
+          <div class="kpi">
+            <div class="row stat-wrap">
+              <div class="col-sm-3 mb-3">
+                <div class="card">
+                  <router-link to="" class="card-body d-flex">
+                    <div class="stat-icon">
+                      <svg
+                        viewBox="0 0 35.012 18.235"
+                        height="18.235"
+                        width="35.012"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g
+                          xmlns="http://www.w3.org/2000/svg"
+                          id="user"
+                          transform="translate(-8 -12.583)"
+                        >
+                          <g
+                            id="Group_1111"
+                            data-name="Group 1111"
+                            transform="translate(8 14.773)"
+                          >
+                            <circle
+                              id="Ellipse_46"
+                              data-name="Ellipse 46"
+                              cx="2.917"
+                              cy="2.917"
+                              r="2.917"
+                              transform="translate(2.919)"
+                              fill="#f63178"
+                              opacity="0.5"
+                            ></circle>
+                            <path
+                              id="Path_1020"
+                              data-name="Path 1020"
+                              d="M17.731,17.5A6.115,6.115,0,0,0,15.3,22.386v.365h-6.2A1.1,1.1,0,0,1,8,21.657v-.729a4.009,4.009,0,0,1,4.011-4.011h3.648A4,4,0,0,1,17.731,17.5Z"
+                              transform="translate(-8 -9.623)"
+                              fill="#f63178"
+                              opacity="0.5"
+                            ></path>
+                            <circle
+                              id="Ellipse_47"
+                              data-name="Ellipse 47"
+                              cx="2.917"
+                              cy="2.917"
+                              r="2.917"
+                              transform="translate(26.259)"
+                              fill="#f63178"
+                              opacity="0.5"
+                            ></circle>
+                            <path
+                              id="Path_1021"
+                              data-name="Path 1021"
+                              d="M29.283,20.929v.729a1.1,1.1,0,0,1-1.094,1.094h-6.2v-.365A6.112,6.112,0,0,0,19.554,17.5a3.978,3.978,0,0,1,2.072-.584h3.648A4.012,4.012,0,0,1,29.283,20.929Z"
+                              transform="translate(5.729 -9.625)"
+                              fill="#f63178"
+                              opacity="0.5"
+                            ></path>
+                          </g>
+                          <circle
+                            id="Ellipse_48"
+                            data-name="Ellipse 48"
+                            cx="4"
+                            cy="4"
+                            r="4"
+                            transform="translate(21 12.583)"
+                            fill="#f63178"
+                          ></circle>
+                          <path
+                            id="Path_1022"
+                            data-name="Path 1022"
+                            d="M24.369,17.583H16.344a4.015,4.015,0,0,0-4.011,4.011v2.188a1.1,1.1,0,0,0,1.094,1.094H27.286a1.1,1.1,0,0,0,1.094-1.094V21.594A4.015,4.015,0,0,0,24.369,17.583Z"
+                            transform="translate(5.149 5.941)"
+                            fill="#f63178"
+                          ></path>
+                        </g>
+                      </svg>
+                    </div>
+                    <div class="stat-no">
+                      <h6>{{ this.users.length }}</h6>
+                      <p class="text-muted">Team Members</p>
+                    </div>
+                  </router-link>
+                </div>
+              </div>
+              <div class="col-sm-3 mb-3">
+                <div class="card">
+                  <router-link to="" class="card-body d-flex">
+                    <div class="stat-icon">
+                      <svg
+                        viewBox="0 0 31.996 26.985"
+                        height="26.985"
+                        width="31.996"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g
+                          xmlns="http://www.w3.org/2000/svg"
+                          id="Group_1641"
+                          data-name="Group 1641"
+                          transform="translate(0.003 -40.092)"
+                        >
+                          <path
+                            id="Path_1032"
+                            data-name="Path 1032"
+                            d="M27.95,40.379c-7.364,3.59-16.356,4-18.951,4.038H2.815A2.819,2.819,0,0,0,0,47.233C0,63.434-.015,62.5.032,62.705a1.32,1.32,0,0,0,.432.714h0a42.008,42.008,0,0,0,8.59.309,55.153,55.153,0,0,0,7.127-.574A43.054,43.054,0,0,0,29.366,59.3a13.8,13.8,0,0,0,2.628-1.272V42.913A2.814,2.814,0,0,0,27.95,40.379Zm1.415,15.943a39.344,39.344,0,0,1-13.555,4.231c-4.688.667-7.368.564-13.184.551V47.233a.188.188,0,0,1,.188-.187H8.057c6.692.106,15.072-1.395,21.045-4.306a.185.185,0,0,1,.264.171Z"
+                            transform="translate(0 0)"
+                            fill="#20c997"
+                          ></path>
+                          <path
+                            id="Path_1033"
+                            data-name="Path 1033"
+                            d="M186.243,193.368a4.651,4.651,0,1,0-4.651-4.651A4.656,4.656,0,0,0,186.243,193.368Zm0-6.674a2.023,2.023,0,1,1-2.023,2.023,2.025,2.025,0,0,1,2.023-2.023Z"
+                            transform="translate(-170.246 -134.976)"
+                            fill="#20c997"
+                          ></path>
+                          <path
+                            id="Path_1034"
+                            data-name="Path 1034"
+                            d="M375.136,133.958c.287,0,.222,0,2.418-.735a1.314,1.314,0,0,0-.831-2.493l-2,.667a1.314,1.314,0,0,0,.415,2.561Z"
+                            transform="translate(-350.463 -84.909)"
+                            fill="#20c997"
+                            opacity="0.5"
+                          ></path>
+                          <path
+                            id="Path_1035"
+                            data-name="Path 1035"
+                            d="M65.429,314.851h2a1.314,1.314,0,0,0,0-2.628h-2a1.314,1.314,0,0,0,0,2.628Z"
+                            transform="translate(-60.111 -255.125)"
+                            fill="#20c997"
+                            opacity="0.5"
+                          ></path>
+                          <path
+                            id="Path_1036"
+                            data-name="Path 1036"
+                            d="M39.008,327.06v3.522a2.817,2.817,0,0,1-1.483,2.48c-4.157,2.245-9.31,3.05-14.09,3.05-9.914,0-15.552-3.393-15.795-3.541a1.236,1.236,0,0,1-.161-.117,42,42,0,0,0,8.59.309c6.267,1.27,14.589,1.021,20.207-2.013a.193.193,0,0,0,.1-.168v-2.25A13.8,13.8,0,0,0,39.008,327.06Z"
+                            transform="translate(-7.015 -269.034)"
+                            fill="#20c997"
+                            opacity="0.5"
+                          ></path>
+                        </g>
+                      </svg>
+                    </div>
+                    <div class="stat-no">
+                      <h6>
+                        ₦{{ formatPrice(roundUpAmount(kpi.totalFees, 0)) }}
+                      </h6>
+                      <p class="text-muted">Monthly Fee</p>
+                    </div>
+                  </router-link>
+                </div>
+              </div>
+              <div class="col-sm-3 mb-3">
+                <div class="card">
+                  <router-link to="" class="card-body d-flex">
+                    <div class="stat-icon">
+                      <svg
+                        viewBox="0 0 31.996 26.985"
+                        height="26.985"
+                        width="31.996"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g
+                          xmlns="http://www.w3.org/2000/svg"
+                          id="Group_1641"
+                          data-name="Group 1641"
+                          transform="translate(0.003 -40.092)"
+                        >
+                          <path
+                            id="Path_1032"
+                            data-name="Path 1032"
+                            d="M27.95,40.379c-7.364,3.59-16.356,4-18.951,4.038H2.815A2.819,2.819,0,0,0,0,47.233C0,63.434-.015,62.5.032,62.705a1.32,1.32,0,0,0,.432.714h0a42.008,42.008,0,0,0,8.59.309,55.153,55.153,0,0,0,7.127-.574A43.054,43.054,0,0,0,29.366,59.3a13.8,13.8,0,0,0,2.628-1.272V42.913A2.814,2.814,0,0,0,27.95,40.379Zm1.415,15.943a39.344,39.344,0,0,1-13.555,4.231c-4.688.667-7.368.564-13.184.551V47.233a.188.188,0,0,1,.188-.187H8.057c6.692.106,15.072-1.395,21.045-4.306a.185.185,0,0,1,.264.171Z"
+                            transform="translate(0 0)"
+                            fill="#20c997"
+                          ></path>
+                          <path
+                            id="Path_1033"
+                            data-name="Path 1033"
+                            d="M186.243,193.368a4.651,4.651,0,1,0-4.651-4.651A4.656,4.656,0,0,0,186.243,193.368Zm0-6.674a2.023,2.023,0,1,1-2.023,2.023,2.025,2.025,0,0,1,2.023-2.023Z"
+                            transform="translate(-170.246 -134.976)"
+                            fill="#20c997"
+                          ></path>
+                          <path
+                            id="Path_1034"
+                            data-name="Path 1034"
+                            d="M375.136,133.958c.287,0,.222,0,2.418-.735a1.314,1.314,0,0,0-.831-2.493l-2,.667a1.314,1.314,0,0,0,.415,2.561Z"
+                            transform="translate(-350.463 -84.909)"
+                            fill="#20c997"
+                            opacity="0.5"
+                          ></path>
+                          <path
+                            id="Path_1035"
+                            data-name="Path 1035"
+                            d="M65.429,314.851h2a1.314,1.314,0,0,0,0-2.628h-2a1.314,1.314,0,0,0,0,2.628Z"
+                            transform="translate(-60.111 -255.125)"
+                            fill="#20c997"
+                            opacity="0.5"
+                          ></path>
+                          <path
+                            id="Path_1036"
+                            data-name="Path 1036"
+                            d="M39.008,327.06v3.522a2.817,2.817,0,0,1-1.483,2.48c-4.157,2.245-9.31,3.05-14.09,3.05-9.914,0-15.552-3.393-15.795-3.541a1.236,1.236,0,0,1-.161-.117,42,42,0,0,0,8.59.309c6.267,1.27,14.589,1.021,20.207-2.013a.193.193,0,0,0,.1-.168v-2.25A13.8,13.8,0,0,0,39.008,327.06Z"
+                            transform="translate(-7.015 -269.034)"
+                            fill="#20c997"
+                            opacity="0.5"
+                          ></path>
+                        </g>
+                      </svg>
+                    </div>
+                    <div class="stat-no">
+                      <h6>
+                        ₦{{ formatPrice(roundUpAmount(kpi.totalAmount, 0)) }}
+                      </h6>
+                      <p class="text-muted">Monthly Payment</p>
+                    </div>
+                  </router-link>
+                </div>
+              </div>
+              <div class="col-sm-3 mb-3">
+                <div class="card">
+                  <router-link to="" class="card-body d-flex">
+                    <div class="stat-icon">
+                      <svg
+                        viewBox="0 0 31.996 26.985"
+                        height="26.985"
+                        width="31.996"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g
+                          xmlns="http://www.w3.org/2000/svg"
+                          id="Group_1641"
+                          data-name="Group 1641"
+                          transform="translate(0.003 -40.092)"
+                        >
+                          <path
+                            id="Path_1032"
+                            data-name="Path 1032"
+                            d="M27.95,40.379c-7.364,3.59-16.356,4-18.951,4.038H2.815A2.819,2.819,0,0,0,0,47.233C0,63.434-.015,62.5.032,62.705a1.32,1.32,0,0,0,.432.714h0a42.008,42.008,0,0,0,8.59.309,55.153,55.153,0,0,0,7.127-.574A43.054,43.054,0,0,0,29.366,59.3a13.8,13.8,0,0,0,2.628-1.272V42.913A2.814,2.814,0,0,0,27.95,40.379Zm1.415,15.943a39.344,39.344,0,0,1-13.555,4.231c-4.688.667-7.368.564-13.184.551V47.233a.188.188,0,0,1,.188-.187H8.057c6.692.106,15.072-1.395,21.045-4.306a.185.185,0,0,1,.264.171Z"
+                            transform="translate(0 0)"
+                            fill="#20c997"
+                          ></path>
+                          <path
+                            id="Path_1033"
+                            data-name="Path 1033"
+                            d="M186.243,193.368a4.651,4.651,0,1,0-4.651-4.651A4.656,4.656,0,0,0,186.243,193.368Zm0-6.674a2.023,2.023,0,1,1-2.023,2.023,2.025,2.025,0,0,1,2.023-2.023Z"
+                            transform="translate(-170.246 -134.976)"
+                            fill="#20c997"
+                          ></path>
+                          <path
+                            id="Path_1034"
+                            data-name="Path 1034"
+                            d="M375.136,133.958c.287,0,.222,0,2.418-.735a1.314,1.314,0,0,0-.831-2.493l-2,.667a1.314,1.314,0,0,0,.415,2.561Z"
+                            transform="translate(-350.463 -84.909)"
+                            fill="#20c997"
+                            opacity="0.5"
+                          ></path>
+                          <path
+                            id="Path_1035"
+                            data-name="Path 1035"
+                            d="M65.429,314.851h2a1.314,1.314,0,0,0,0-2.628h-2a1.314,1.314,0,0,0,0,2.628Z"
+                            transform="translate(-60.111 -255.125)"
+                            fill="#20c997"
+                            opacity="0.5"
+                          ></path>
+                          <path
+                            id="Path_1036"
+                            data-name="Path 1036"
+                            d="M39.008,327.06v3.522a2.817,2.817,0,0,1-1.483,2.48c-4.157,2.245-9.31,3.05-14.09,3.05-9.914,0-15.552-3.393-15.795-3.541a1.236,1.236,0,0,1-.161-.117,42,42,0,0,0,8.59.309c6.267,1.27,14.589,1.021,20.207-2.013a.193.193,0,0,0,.1-.168v-2.25A13.8,13.8,0,0,0,39.008,327.06Z"
+                            transform="translate(-7.015 -269.034)"
+                            fill="#20c997"
+                            opacity="0.5"
+                          ></path>
+                        </g>
+                      </svg>
+                    </div>
+                    <div class="stat-no">
+                      <h6>
+                        ₦{{
+                          formatPrice(
+                            roundUpAmount(kpi.totalinflow - kpi.totaloutflow, 0)
+                          )
+                        }}
+                      </h6>
+                      <p class="text-muted">Wallet Balance</p>
+                    </div>
+                  </router-link>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div
-          class="tab-pane fade show active"
+          class="tab-pane fade"
           id="pills-users"
           role="tabpanel"
           aria-labelledby="pills-users-tab"
@@ -268,14 +557,36 @@ export default {
       users: [],
       transactions: [],
       payments: [],
+      kpi: {},
     };
   },
   methods: {
     getCompany() {
       this.$store
-        .dispatch("get", `company/30/null`)
+        .dispatch(
+          "get",
+          `company/${this.$route.params.id}/${this.$store.state.user.id}`
+        )
         .then((resp) => {
           console.log(resp);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    getCompanyKpi() {
+      this.$store
+        .dispatch(
+          "get",
+          `company/kpi/${this.$route.params.id}/${this.$store.state.user.id}`
+        )
+        .then((resp) => {
+          console.log(resp);
+          this.kpi = resp.data;
+          //   resp.data.map((item) => {
+          //     this.fees += item.fees;
+          //   });
+          //   console.log(this.fees);
         })
         .catch((err) => {
           console.log(err);
@@ -337,6 +648,7 @@ export default {
     this.getCompanyUsers();
     this.getCompanyTransactions();
     this.getPayments();
+    this.getCompanyKpi();
   },
 };
 </script>
@@ -344,6 +656,10 @@ export default {
 <style scoped lang="scss">
 .order {
   .order-body {
+    .nav-pills .nav-link.active,
+    .nav-pills .show > .nav-link {
+      background: #012538 !important;
+    }
     .nav-link {
       color: black;
       padding: 5px 54px;
@@ -352,6 +668,37 @@ export default {
     .nav-pills .nav-link.active,
     .nav-pills .show > .nav-link {
       color: #fff;
+    }
+
+    .kpi {
+      .stat-icon {
+        background: #5f63f210;
+        height: fit-content;
+        border-radius: 10px;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+          width: 31.996px;
+        }
+      }
+      .stat-no {
+        margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        h6 {
+          font-size: 21px;
+          margin-bottom: 0;
+          color: black;
+        }
+        p {
+          font-size: 13px;
+          margin-bottom: 0;
+        }
+      }
     }
   }
 }
