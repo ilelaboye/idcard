@@ -27,6 +27,14 @@
       </router-link>
       <router-link
         class="list-group-item list-group-item-action list-group-item-light px-3"
+        :to="{ name: 'reports' }"
+        :class="$route.name == 'reports' ? 'active' : ''"
+      >
+        <i class="fa fa-table"></i>
+        <span>Report</span>
+      </router-link>
+      <router-link
+        class="list-group-item list-group-item-action list-group-item-light px-3"
         :to="{ name: 'demoRequests' }"
         :class="$route.name == 'demoRequests' ? 'active' : ''"
       >

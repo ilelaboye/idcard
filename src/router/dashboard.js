@@ -18,6 +18,12 @@ const dashboardRoutes = [
   },
 
   {
+    path: "reports",
+    component: () => import("@/views/dashboard/reports/index.vue"),
+    name: "reports",
+  },
+
+  {
     path: "jumia",
     component: JumiaLayout,
     children: JumiaRoutes,
