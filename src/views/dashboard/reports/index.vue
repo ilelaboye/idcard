@@ -33,13 +33,13 @@
                     {{ item.name }}
                   </td>
                   <td class="text-center">
-                    ₦{{ formatPrice(roundUpAmount(item.online_payment)) }}
+                    {{ formatPrice(roundUpAmount(item.online_payment)) }}
                   </td>
                   <td class="text-center">
-                    ₦{{ formatPrice(roundUpAmount(item.offline_payment)) }}
+                    {{ formatPrice(roundUpAmount(item.offline_payment)) }}
                   </td>
                   <td class="text-center">
-                    ₦{{ formatPrice(roundUpAmount(item.wallet_inflow)) }}
+                    {{ formatPrice(roundUpAmount(item.wallet_inflow)) }}
                   </td>
                 </tr>
               </tbody>
