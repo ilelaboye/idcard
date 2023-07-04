@@ -101,6 +101,15 @@
                 Approved
               </router-link>
             </li>
+            <li>
+              <router-link
+                :to="{ name: 'clanInflow' }"
+                class="nav-link"
+                :class="$route.name == 'clanInflow' ? 'active' : ''"
+              >
+                Inflows
+              </router-link>
+            </li>
           </ul>
         </div>
       </div>

@@ -38,22 +38,20 @@ export default {
   data() {
     return {
       // userExpense: [],
+      balances: {},
     };
   },
   methods: {
-    // getUser() {
-    //   this.$store.dispatch("getUser").then((resp) => {
-    //     var data = {
-    //       user: resp.data.user,
-    //       profile: resp.data.profile,
-    //       token: this.$store.state.token,
-    //     };
-    //     this.$store.commit("setUser", data);
-    //   });
-    // },
+    getBalances() {
+      this.$store
+        .dispatch("get", `external/termii/history/${this.$store.state.user.id}`)
+        .then((resp) => {
+          console.log(resp);
+        });
+    },
   },
   async created() {
-    // await this.getUser();
+    this.getBalances();
   },
 };
 </script>

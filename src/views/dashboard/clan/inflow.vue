@@ -1,7 +1,7 @@
 <template>
   <div class="order px-2 py-4 mt-2" v-if="loaded">
     <div class="d-flex justify-content-between align-items-center">
-      <h5 class="card-title mb-0 text-uppercase">Clan Approved Transactions</h5>
+      <h5 class="card-title mb-0 text-uppercase">Wallet Inflow From Clan</h5>
     </div>
     <div class="orders-body mt-2">
       <div class="card">
@@ -30,7 +30,7 @@
                   <td>{{ transact.id }}</td>
 
                   <td>₦{{ formatPrice(transact.amount) }}</td>
-                  <td>{{ formatDateTime(transact.date_added) }}</td>
+                  <!-- <td>{{ formatDateTime(transact.date_added) }}</td>
 
                   <td>{{ formatDateTime(transact.date_approved) }}</td>
                   <td>{{ transact.vertical }}</td>
@@ -41,11 +41,11 @@
                   <td>{{ transact.destination_bank_name }}</td>
                   <td>{{ transact.transaction_reference }}</td>
                   <td>{{ transact.transaction_description }}</td>
-                  <td>{{ transact.session_id }}</td>
+                  <td>{{ transact.session_id }}</td> -->
                 </tr>
               </tbody>
               <NoData
-                :data="{ colspan: 12, message: 'No available transaction' }"
+                :data="{ colspan: 9, message: 'No available transaction' }"
                 v-else
               ></NoData>
             </table>
@@ -57,7 +57,6 @@
 </template>
 
 <script>
-import banks from "@/data/banks.json";
 import NoData from "@/components/dashboard/noData.vue";
 export default {
   components: { NoData },
@@ -68,25 +67,18 @@ export default {
     };
   },
   methods: {
-    getTransactions() {
+    getInflow() {
       console.log("ddd");
       this.$store.commit("setLoader", true);
       this.$store
-        .dispatch("get", `payments/clanapproved/${this.$store.state.user.id}`)
+        .dispatch(
+          "get",
+          `external/clan/inflow/history/${this.$store.state.user.id}`
+        )
         .then((resp) => {
           this.$store.commit("setLoader", false);
           this.loaded = true;
           this.transactions = resp.data;
-          this.transactions.forEach((item) => {
-            for (let i = 0; i < banks.length; i++) {
-              if (item.destination_bank_code == banks[i].bank_code) {
-                item.destination_bank_name2 = banks[i].name;
-              }
-            }
-            if (item.destination_bank_code == 1) {
-              item.destination_bank_name2 = "OFFLINE";
-            }
-          });
 
           console.log(resp);
         })
@@ -96,8 +88,8 @@ export default {
     },
   },
   created() {
-    // console.log(banks);
-    this.getTransactions();
+    console.log(this.$store.state.user);
+    this.getInflow();
   },
 };
 </script>

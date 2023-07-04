@@ -145,10 +145,17 @@ export default {
         .dispatch("get", "get-companies/" + this.$store.state.user.id)
         .then((resp) => {
           this.companies = resp.data;
-          console.log(this.companies);
+          // console.log(this.companies);
         })
         .catch(() => {
           this.$store.commit("setLoader", false);
+        });
+    },
+    getTest() {
+      this.$store
+        .dispatch("get", `test-report/${this.$store.state.user.id}`)
+        .then((resp) => {
+          console.log(resp);
         });
     },
     getReports() {
@@ -166,8 +173,9 @@ export default {
         )
         .then((resp) => {
           this.loaded = true;
+          // var count = [];
           resp.data.forEach((item) => {
-            var month = new Date(item.date).getMonth();
+            var month = new Date(String(item.date)).getMonth();
             if (item.mode == 3 && item.status == 2) {
               this.report[month].online_payment =
                 this.report[month].online_payment + parseFloat(item.amount);
@@ -177,15 +185,20 @@ export default {
                 this.report[month].offline_payment + parseFloat(item.amount);
             }
             if (item.mode == 1 && item.status == 1) {
+              // if (month == 5) {
+              //   count.push(`${item.id} - ${item.date}`);
+              // }
               this.report[month].wallet_inflow =
                 this.report[month].wallet_inflow + parseFloat(item.amount);
             }
           });
+          // console.log(count);
           this.$store.commit("setLoader", false);
         });
     },
   },
   created() {
+    this.getTest();
     this.getReports();
     this.getCompanies();
   },

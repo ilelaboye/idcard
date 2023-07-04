@@ -416,16 +416,36 @@
                   <th>Payment Status</th>
                   <th>Payment Method</th>
                   <th>Session ID</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(item, index) in payments" :key="index">
                   <td>
-                    <router-link
-                      class="btn btn-view"
-                      :to="{ name: 'companyView', params: { id: item.id } }"
-                      ><i class="fa fa-eye"></i
-                    ></router-link>
+                    <div class="d-flex align-items-center">
+                      <router-link
+                        class="btn btn-view"
+                        :to="{ name: 'companyView', params: { id: item.id } }"
+                        ><i class="fa fa-eye"></i
+                      ></router-link>
+                      <!-- you can only reprocess payment when it is stucked in processing -->
+                      <button
+                        class="btn btn-primary f-13"
+                        @click.prevent="reprocessPayment(item.payment_no)"
+                        v-if="item.status == 9"
+                      >
+                        Reprocess
+                      </button>
+                      <button
+                        class="btn btn-primary f-12 ms-2"
+                        data-bs-toggle="modal"
+                        data-bs-target="#changeStatus"
+                        @click="setSelectedPayment(item)"
+                        v-if="item.status != 4 && item.status != 99"
+                      >
+                        Change Status
+                      </button>
+                    </div>
                   </td>
                   <td>{{ item.payment_no }}</td>
                   <td>
@@ -534,6 +554,8 @@
                     <span v-else-if="item.mode == 2">Purchases</span>
                     <span v-else-if="item.mode == 3">Online Payment</span>
                     <span v-else-if="item.mode == 4">Offline Payment</span>
+                    <span v-else-if="item.mode == 6">Subscription</span>
+                    <span v-else-if="item.mode == 7">Fee</span>
                     <span v-else></span>
                   </td>
                   <td>{{ item.mode_id }}</td>
@@ -542,6 +564,66 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="changeStatus"
+      tabindex="-1"
+      aria-labelledby="changeStatusLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 class="modal-title" id="changeStatusLabel">
+              Change Payment Status - {{ selectedPayment.payment_no }}
+            </h6>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="">
+              <div class="form-group">
+                <label class="f-13">Amount</label>
+                <input
+                  type="text"
+                  class="form-control f-14"
+                  disabled
+                  :value="selectedPayment.total"
+                />
+              </div>
+              <div class="form-group">
+                <label class="f-13">Status</label>
+                <select v-model="newStatus" class="form-control">
+                  <option value="0">Draft</option>
+                  <option value="1">Sent for approval</option>
+                  <option value="2">Approved</option>
+                  <option value="3">Reject</option>
+                  <option value="4">Fully Paid</option>
+                  <option value="5">Error in Processing</option>
+                  <option value="6">Awaiting Funds</option>
+                  <option value="7">Awaiting Due Date</option>
+                  <option value="9">Processing</option>
+                  <option value="99">Deleted</option>
+                </select>
+              </div>
+              <button
+                class="btn btn-primary w-100"
+                :disabled="loading"
+                @click.prevent="changeStatus()"
+              >
+                <span v-if="!loading">Change</span>
+                <span v-else>Loading...</span>
+              </button>
+            </form>
           </div>
         </div>
       </div>
@@ -558,9 +640,43 @@ export default {
       transactions: [],
       payments: [],
       kpi: {},
+      selectedPayment: {},
+      loading: false,
+      newStatus: "",
     };
   },
   methods: {
+    setSelectedPayment(payment) {
+      this.selectedPayment = payment;
+    },
+    changeStatus() {
+      this.$store.commit("setLoader", true);
+      this.$store
+        .dispatch("post", {
+          endpoint: `payments/status/${this.$store.state.user.id}`,
+          details: {
+            status: this.newStatus,
+            payment_no: this.selectedPayment.payment_no,
+            company_id: this.$route.params.id,
+          },
+        })
+        .then(() => {
+          this.$store.commit("setLoader", false);
+          window.location.reload();
+        });
+    },
+    reprocessPayment(paymentNo) {
+      this.$store.commit("setLoader", true);
+      this.$store
+        .dispatch("post", {
+          endpoint: `payments/reprocess/${this.$store.state.user.id}`,
+          details: { companyId: this.$route.params.id, paymentNo: paymentNo },
+        })
+        .then((resp) => {
+          this.$store.commit("setLoader", false);
+          console.log(resp);
+        });
+    },
     getCompany() {
       this.$store
         .dispatch(
@@ -636,7 +752,7 @@ export default {
           // this.$store.commit("setLoader", false);
           // this.loaded = true;
           this.payments = resp.data.payments;
-          // console.log(resp);
+          console.log(resp);
         })
         .catch(() => {
           this.$store.commit("setLoader", false);

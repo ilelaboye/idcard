@@ -81,6 +81,11 @@ const dashboardRoutes = [
     component: () => import("@/views/dashboard/clan/pending.vue"),
   },
   {
+    name: "clanInflow",
+    path: "/clan/inflow",
+    component: () => import("@/views/dashboard/clan/inflow.vue"),
+  },
+  {
     name: "clanApprovedTransactions",
     path: "/clan/approved-transactions",
     component: () => import("@/views/dashboard/clan/approved.vue"),
