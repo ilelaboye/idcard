@@ -10,38 +10,39 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>Date</th>
                   <th>Amount</th>
-                  <th>Date Added</th>
-                  <th>Date Approved</th>
-                  <th>Vertical</th>
-                  <th>merchant ID</th>
-                  <th>Transaction Type</th>
-                  <th>Account No</th>
-                  <th>Bank Name</th>
-                  <th>Bank Account Name</th>
-                  <th>Transaction Reference</th>
-                  <th>Transaction Description</th>
+                  <th>Sender</th>
+                  <th>Creditor</th>
+                  <th>Narration</th>
+                  <th>Transaction Ref</th>
+                  <th>Payment Ref</th>
                   <th>Session ID</th>
                 </tr>
               </thead>
               <tbody v-if="transactions.length > 0">
-                <tr v-for="(transact, index) in transactions" :key="index">
-                  <td>{{ transact.id }}</td>
+                <tr v-for="(item, index) in transactions" :key="index">
+                  <td>{{ formatDateTime(item.created_at) }}</td>
 
-                  <td>₦{{ formatPrice(transact.amount) }}</td>
-                  <!-- <td>{{ formatDateTime(transact.date_added) }}</td>
+                  <td>₦{{ formatPrice(item.amount) }}</td>
+                  <td>
+                    <span class="d-block">{{
+                      item.originatoraccountnumber
+                    }}</span>
+                    <span class="d-block">{{ item.originatorname }}</span>
+                    <span>{{ item.bankname }}</span>
+                  </td>
+                  <td>
+                    <span class="d-block">{{ item.craccount }}</span>
+                    <span class="d-block">{{ item.craccountname }}</span>
+                  </td>
 
-                  <td>{{ formatDateTime(transact.date_approved) }}</td>
-                  <td>{{ transact.vertical }}</td>
-                  <td>{{ transact.merchant_id }}</td>
-                  <td>{{ transact.transaction_type }}</td>
-                  <td>{{ transact.destination_account_number }}</td>
-                  <td>{{ transact.destination_bank_name2 }}</td>
-                  <td>{{ transact.destination_bank_name }}</td>
-                  <td>{{ transact.transaction_reference }}</td>
-                  <td>{{ transact.transaction_description }}</td>
-                  <td>{{ transact.session_id }}</td> -->
+                  <td>
+                    {{ item.narration }}
+                  </td>
+                  <td>{{ item.transactionRef }}</td>
+                  <td>{{ item.paymentreference }}</td>
+                  <td>{{ item.sessionid }}</td>
                 </tr>
               </tbody>
               <NoData
