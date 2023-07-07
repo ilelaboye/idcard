@@ -12,15 +12,7 @@
                 <tr>
                   <th>ID</th>
                   <th>Date Added</th>
-                  <th>Approved</th>
-                  <th>Response Code</th>
-                  <th>Approved By</th>
-                  <th>Date Approved</th>
-                  <th>Vertical</th>
-                  <th>merchant ID</th>
-                  <th>Transaction Type</th>
                   <th>Destination Account Number</th>
-                  <th>Destination Bank Code</th>
                   <th>Destination Bank Name</th>
                   <th>Destination Bank Account Name</th>
                   <th>Transaction Reference</th>
@@ -32,24 +24,16 @@
               </thead>
               <tbody v-if="transactions.length > 0">
                 <tr v-for="(transact, index) in transactions" :key="index">
-                  <td>${{ transact.id }}</td>
-                  <td>${{ transact.date_added }}</td>
-                  <td>${{ transact.is_approved }}</td>
-                  <td>${{ transact.response_code }}</td>
-                  <td>${{ transact.approved_by }}</td>
-                  <td>${{ transact.date_approved }}</td>
-                  <td>${{ transact.vertical }}</td>
-                  <td>${{ transact.merchant_id }}</td>
-                  <td>${{ transact.transaction_type }}</td>
-                  <td>${{ transact.destination_account_number }}</td>
-                  <td>${{ transact.destination_bank_code }}</td>
-                  <td>${{ transact.destination_bank_name2 }}</td>
-                  <td>${{ transact.destination_bank_name }}</td>
-                  <td>${{ transact.transaction_reference }}</td>
-                  <td>${{ transact.amount }}</td>
-                  <td>${{ transact.transaction_description }}</td>
-                  <td>${{ transact.merchant_name }}</td>
-                  <td>${{ transact.session_id }}</td>
+                  <td>{{ transact.id }}</td>
+                  <td>{{ formatDateTime(transact.date_added) }}</td>
+                  <td>{{ transact.destination_account_number }}</td>
+                  <td>{{ transact.destination_bank_name2 }}</td>
+                  <td>{{ transact.destination_bank_name }}</td>
+                  <td>{{ transact.transaction_reference }}</td>
+                  <td>{{ transact.amount }}</td>
+                  <td>{{ transact.transaction_description }}</td>
+                  <td>{{ transact.merchant_name }}</td>
+                  <td>{{ transact.session_id }}</td>
                 </tr>
               </tbody>
               <NoData

@@ -11,7 +11,8 @@ export default {
       return new Intl.NumberFormat().format(value);
     },
     formatDateTime(value) {
-      return new Date(value).toDateString();
+      var hold = new Date(value).toDateString().split(" ");
+      return `${hold[2]} ${hold[1]}' ${hold[3][2]}${hold[3][3]}`;
     },
     formatDateToLocalDate(value) {
       return new Date(value).toLocaleDateString();

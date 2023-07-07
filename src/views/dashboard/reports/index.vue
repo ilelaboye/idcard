@@ -99,7 +99,17 @@
           aria-labelledby="pills-history-tab"
         >
           <div class="card">
-            <div class="card-body pt-2"></div>
+            <div class="card-body pt-2">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>
