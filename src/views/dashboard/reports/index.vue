@@ -104,9 +104,34 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th></th>
+                      <th>Amount</th>
+                      <th>Phone</th>
+                      <th>Created At</th>
+                      <th>Sent At</th>
+                      <th>Status</th>
+                      <th>Message</th>
                     </tr>
                   </thead>
+                  <tbody>
+                    <tr v-for="(item, index) in termiiHistory" :key="index">
+                      <td>₦{{ item.amount }}</td>
+                      <td>{{ item.receiver }}</td>
+                      <td>{{ formatDateTimeSecond(item.created_at) }}</td>
+                      <td>{{ formatDateTimeSecond(item.sent_at) }}</td>
+                      <td>
+                        <span
+                          class="badge"
+                          :class="
+                            item.status == 'Delivered'
+                              ? 'badge-success'
+                              : 'badge-danger'
+                          "
+                          >{{ item.status }}</span
+                        >
+                      </td>
+                      <td>{{ item.message }}</td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>
@@ -129,6 +154,7 @@ export default {
       loaded: false,
       company: {},
       companies: [],
+      termiiHistory: [],
       report: [
         {
           name: "Jan",
@@ -217,18 +243,16 @@ export default {
           this.$store.commit("setLoader", false);
         });
     },
-    getBalance() {
+
+    getTermiiHistory(page = 1) {
       this.$store
-        .dispatch("get", `external/allbalances/${this.$store.state.user.id}`)
+        .dispatch(
+          "get",
+          `external/termii/history/${this.$store.state.user.id}?page=${page}`
+        )
         .then((resp) => {
           console.log(resp);
-        });
-    },
-    getTermiiHistory() {
-      this.$store
-        .dispatch("get", `external/termii/history/${this.$store.state.user.id}`)
-        .then((resp) => {
-          console.log(resp);
+          this.termiiHistory = resp.data.termiiHistory;
         });
     },
     getReports() {
@@ -271,7 +295,6 @@ export default {
     },
   },
   created() {
-    this.getBalance();
     this.getReports();
     this.getCompanies();
     this.getTermiiHistory();
