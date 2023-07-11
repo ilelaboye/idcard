@@ -67,8 +67,10 @@
                     <tr>
                       <th>Month</th>
                       <th class="text-center">Payment</th>
+                      <th class="text-center">Refund</th>
                       <th class="text-center">Offline Paymnent</th>
                       <th class="text-center">Wallet Inflow</th>
+                      <th class="text-center">Fee</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -80,10 +82,16 @@
                         {{ formatPrice(roundUpAmount(item.online_payment)) }}
                       </td>
                       <td class="text-center">
+                        {{ formatPrice(roundUpAmount(item.refund)) }}
+                      </td>
+                      <td class="text-center">
                         {{ formatPrice(roundUpAmount(item.offline_payment)) }}
                       </td>
                       <td class="text-center">
                         {{ formatPrice(roundUpAmount(item.wallet_inflow)) }}
+                      </td>
+                      <td class="text-center">
+                        {{ formatPrice(roundUpAmount(item.fee)) }}
                       </td>
                     </tr>
                   </tbody>
@@ -161,72 +169,96 @@ export default {
           online_payment: 0,
           offline_payment: 0,
           wallet_inflow: 0,
+          fee: 0,
+          refund: 0,
         },
         {
           name: "Feb",
           online_payment: 0,
           offline_payment: 0,
           wallet_inflow: 0,
+          fee: 0,
+          refund: 0,
         },
         {
           name: "Mar",
           online_payment: 0,
           offline_payment: 0,
           wallet_inflow: 0,
+          fee: 0,
+          refund: 0,
         },
         {
           name: "Apr",
           online_payment: 0,
           offline_payment: 0,
           wallet_inflow: 0,
+          fee: 0,
+          refund: 0,
         },
         {
           name: "May",
           online_payment: 0,
           offline_payment: 0,
           wallet_inflow: 0,
+          fee: 0,
+          refund: 0,
         },
         {
           name: "Jun",
           online_payment: 0,
           offline_payment: 0,
           wallet_inflow: 0,
+          fee: 0,
+          refund: 0,
         },
         {
           name: "Jul",
           online_payment: 0,
           offline_payment: 0,
           wallet_inflow: 0,
+          fee: 0,
+          refund: 0,
         },
         {
           name: "Aug",
           online_payment: 0,
           offline_payment: 0,
           wallet_inflow: 0,
+          fee: 0,
+          refund: 0,
         },
         {
           name: "Sep",
           online_payment: 0,
           offline_payment: 0,
           wallet_inflow: 0,
+          fee: 0,
+          refund: 0,
         },
         {
           name: "Oct",
           online_payment: 0,
           offline_payment: 0,
           wallet_inflow: 0,
+          fee: 0,
+          refund: 0,
         },
         {
           name: "Nov",
           online_payment: 0,
           offline_payment: 0,
           wallet_inflow: 0,
+          fee: 0,
+          refund: 0,
         },
         {
           name: "Dec",
           online_payment: 0,
           offline_payment: 0,
           wallet_inflow: 0,
+          fee: 0,
+          refund: 0,
         },
       ],
     };
@@ -261,6 +293,8 @@ export default {
         item.offline_payment = 0;
         item.online_payment = 0;
         item.wallet_inflow = 0;
+        item.fee = 0;
+        item.refund = 0;
       });
 
       this.$store
@@ -273,6 +307,18 @@ export default {
           // var count = [];
           resp.data.forEach((item) => {
             var month = new Date(String(item.date)).getMonth();
+            if (item.mode == 3 && item.status == 1) {
+              this.report[month].refund =
+                this.report[month].refund + parseFloat(item.amount);
+            }
+            if (item.mode == 3 && item.status == 2) {
+              var amount = item.fees;
+              if (!amount) {
+                amount = 0;
+              }
+              this.report[month].fee =
+                this.report[month].fee + parseFloat(amount);
+            }
             if (item.mode == 3 && item.status == 2) {
               this.report[month].online_payment =
                 this.report[month].online_payment + parseFloat(item.amount);
