@@ -71,6 +71,7 @@
                       <th class="text-center">Offline Paymnent</th>
                       <th class="text-center">Wallet Inflow</th>
                       <th class="text-center">Fee</th>
+                      <th class="text-center">VAT</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -92,6 +93,9 @@
                       </td>
                       <td class="text-center">
                         {{ formatPrice(roundUpAmount(item.fee)) }}
+                      </td>
+                      <td class="text-center">
+                        {{ formatPrice(roundUpAmount(calculateVAT(item.fee))) }}
                       </td>
                     </tr>
                   </tbody>
@@ -163,6 +167,7 @@ export default {
       company: {},
       companies: [],
       termiiHistory: [],
+      vat_percent: 0,
       report: [
         {
           name: "Jan",
@@ -264,6 +269,10 @@ export default {
     };
   },
   methods: {
+    calculateVAT(amount) {
+      const vatFee = amount - (amount / (100 + this.vat_percent)) * 100;
+      return vatFee;
+    },
     getCompanies() {
       this.$store
         .dispatch("get", "get-companies/" + this.$store.state.user.id)
@@ -341,6 +350,7 @@ export default {
     },
   },
   created() {
+    this.vat_percent = process.env.VUE_APP_VAT_PERCENT;
     this.getReports();
     this.getCompanies();
     this.getTermiiHistory();
