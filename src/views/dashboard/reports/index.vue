@@ -270,7 +270,8 @@ export default {
   },
   methods: {
     calculateVAT(amount) {
-      const vatFee = amount - (amount / (100 + this.vat_percent)) * 100;
+      var a = (amount / (100 + this.vat_percent)) * 100;
+      const vatFee = amount - a;
       return vatFee;
     },
     getCompanies() {
