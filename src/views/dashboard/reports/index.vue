@@ -70,9 +70,10 @@
                       <th class="text-center">Refund</th>
                       <th class="text-center">Offline Paymnent</th>
                       <th class="text-center">Wallet Inflow</th>
-                      <th class="text-center">Fee</th>
-                      <th class="text-center">VAT</th>
+                      <th class="text-center">Fee Based</th>
                       <th class="text-center">Subscription</th>
+                      <th class="text-center">Total Revenue</th>
+                      <th class="text-center">VAT</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -83,10 +84,7 @@
                       <td class="text-center">
                         {{
                           formatPrice(
-                            roundUpAmount(
-                              parseFloat(item.online_payment) -
-                                parseFloat(item.refund)
-                            )
+                            roundUpAmount(parseFloat(item.online_payment))
                           )
                         }}
                       </td>
@@ -100,13 +98,46 @@
                         {{ formatPrice(roundUpAmount(item.wallet_inflow)) }}
                       </td>
                       <td class="text-center">
-                        {{ formatPrice(roundUpAmount(item.fee)) }}
+                        {{
+                          formatPrice(
+                            roundUpAmount(
+                              parseFloat(item.fee) -
+                                parseFloat(calculateVAT(item.fee))
+                            )
+                          )
+                        }}
                       </td>
                       <td class="text-center">
-                        {{ formatPrice(roundUpAmount(calculateVAT(item.fee))) }}
+                        {{
+                          formatPrice(
+                            roundUpAmount(
+                              parseFloat(item.subscription) -
+                                parseFloat(calculateVAT(item.subscription))
+                            )
+                          )
+                        }}
                       </td>
                       <td class="text-center">
-                        {{ formatPrice(roundUpAmount(item.subscription)) }}
+                        {{
+                          formatPrice(
+                            roundUpAmount(
+                              parseFloat(item.fee) -
+                                parseFloat(calculateVAT(item.fee)) +
+                                (parseFloat(item.subscription) -
+                                  parseFloat(calculateVAT(item.subscription)))
+                            )
+                          )
+                        }}
+                      </td>
+                      <td class="text-center">
+                        {{
+                          formatPrice(
+                            roundUpAmount(
+                              calculateVAT(item.fee) +
+                                calculateVAT(item.subscription)
+                            )
+                          )
+                        }}
                       </td>
                     </tr>
                   </tbody>
@@ -132,12 +163,12 @@
                       <th>Created At</th>
                       <th>Sent At</th>
                       <th>Status</th>
-                      <th>Message</th>
+                      <!-- <th>Message</th> -->
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(item, index) in termiiHistory" :key="index">
-                      <td>₦{{ item.amount }}</td>
+                      <td>{{ item.amount }}</td>
                       <td>{{ item.receiver }}</td>
                       <td>{{ formatDateTimeSecond(item.created_at) }}</td>
                       <td>{{ formatDateTimeSecond(item.sent_at) }}</td>
@@ -145,14 +176,14 @@
                         <span
                           class="badge"
                           :class="
-                            item.status == 'Delivered'
+                            item.status == 'Delivered' || item.status == 'Sent'
                               ? 'badge-success'
                               : 'badge-danger'
                           "
                           >{{ item.status }}</span
                         >
                       </td>
-                      <td>{{ item.message }}</td>
+                      <!-- <td>{{ item.message }}</td> -->
                     </tr>
                   </tbody>
                 </table>
