@@ -72,6 +72,7 @@
                       <th class="text-center">Wallet Inflow</th>
                       <th class="text-center">Fee</th>
                       <th class="text-center">VAT</th>
+                      <th class="text-center">Subscription</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -80,7 +81,14 @@
                         {{ item.name }}
                       </td>
                       <td class="text-center">
-                        {{ formatPrice(roundUpAmount(item.online_payment)) }}
+                        {{
+                          formatPrice(
+                            roundUpAmount(
+                              parseFloat(item.online_payment) -
+                                parseFloat(item.refund)
+                            )
+                          )
+                        }}
                       </td>
                       <td class="text-center">
                         {{ formatPrice(roundUpAmount(item.refund)) }}
@@ -96,6 +104,9 @@
                       </td>
                       <td class="text-center">
                         {{ formatPrice(roundUpAmount(calculateVAT(item.fee))) }}
+                      </td>
+                      <td class="text-center">
+                        {{ formatPrice(roundUpAmount(item.subscription)) }}
                       </td>
                     </tr>
                   </tbody>
@@ -176,6 +187,7 @@ export default {
           wallet_inflow: 0,
           fee: 0,
           refund: 0,
+          subscription: 0,
         },
         {
           name: "Feb",
@@ -184,6 +196,7 @@ export default {
           wallet_inflow: 0,
           fee: 0,
           refund: 0,
+          subscription: 0,
         },
         {
           name: "Mar",
@@ -192,6 +205,7 @@ export default {
           wallet_inflow: 0,
           fee: 0,
           refund: 0,
+          subscription: 0,
         },
         {
           name: "Apr",
@@ -200,6 +214,7 @@ export default {
           wallet_inflow: 0,
           fee: 0,
           refund: 0,
+          subscription: 0,
         },
         {
           name: "May",
@@ -208,6 +223,7 @@ export default {
           wallet_inflow: 0,
           fee: 0,
           refund: 0,
+          subscription: 0,
         },
         {
           name: "Jun",
@@ -216,6 +232,7 @@ export default {
           wallet_inflow: 0,
           fee: 0,
           refund: 0,
+          subscription: 0,
         },
         {
           name: "Jul",
@@ -224,6 +241,7 @@ export default {
           wallet_inflow: 0,
           fee: 0,
           refund: 0,
+          subscription: 0,
         },
         {
           name: "Aug",
@@ -232,6 +250,7 @@ export default {
           wallet_inflow: 0,
           fee: 0,
           refund: 0,
+          subscription: 0,
         },
         {
           name: "Sep",
@@ -240,6 +259,7 @@ export default {
           wallet_inflow: 0,
           fee: 0,
           refund: 0,
+          subscription: 0,
         },
         {
           name: "Oct",
@@ -248,6 +268,7 @@ export default {
           wallet_inflow: 0,
           fee: 0,
           refund: 0,
+          subscription: 0,
         },
         {
           name: "Nov",
@@ -256,6 +277,7 @@ export default {
           wallet_inflow: 0,
           fee: 0,
           refund: 0,
+          subscription: 0,
         },
         {
           name: "Dec",
@@ -264,14 +286,16 @@ export default {
           wallet_inflow: 0,
           fee: 0,
           refund: 0,
+          subscription: 0,
         },
       ],
     };
   },
   methods: {
     calculateVAT(amount) {
-      var a = (amount / (100 + this.vat_percent)) * 100;
-      const vatFee = amount - a;
+      var vatFee =
+        (parseFloat(this.vat_percent) / (100 + parseFloat(this.vat_percent))) *
+        amount;
       return vatFee;
     },
     getCompanies() {
@@ -305,8 +329,10 @@ export default {
         item.wallet_inflow = 0;
         item.fee = 0;
         item.refund = 0;
+        item.subscription = 0;
       });
-
+      console.log(this.company);
+      if (!this.company) this.company = {};
       this.$store
         .dispatch(
           "get",
@@ -332,6 +358,10 @@ export default {
             if (item.mode == 3 && item.status == 2) {
               this.report[month].online_payment =
                 this.report[month].online_payment + parseFloat(item.amount);
+            }
+            if (item.mode == 6 && item.status == 2) {
+              this.report[month].subscription =
+                this.report[month].subscription + parseFloat(item.amount);
             }
             if (item.mode == 4 && item.status == 2) {
               this.report[month].offline_payment =
