@@ -219,6 +219,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          
         },
         {
           name: "Feb",
@@ -228,6 +229,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          
         },
         {
           name: "Mar",
@@ -237,6 +239,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          
         },
         {
           name: "Apr",
@@ -246,6 +249,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          
         },
         {
           name: "May",
@@ -255,6 +259,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          
         },
         {
           name: "Jun",
@@ -264,6 +269,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+                    
         },
         {
           name: "Jul",
@@ -273,6 +279,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          
         },
         {
           name: "Aug",
@@ -282,6 +289,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          
         },
         {
           name: "Sep",
@@ -291,6 +299,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          
         },
         {
           name: "Oct",
@@ -300,6 +309,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          
         },
         {
           name: "Nov",
@@ -309,6 +319,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          
         },
         {
           name: "Dec",
@@ -318,6 +329,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          
         },
       ],
     };
@@ -377,6 +389,8 @@ export default {
             if (item.mode == 3 && item.status == 1) {
               this.report[month].refund =
                 this.report[month].refund + parseFloat(item.amount);
+                this.report[month].online_payment =
+                this.report[month].online_payment - parseFloat(item.amount);
             }
             if (item.mode == 3 && item.status == 2) {
               var amount = item.fees;
@@ -393,6 +407,10 @@ export default {
             if (item.mode == 6 && item.status == 2) {
               this.report[month].subscription =
                 this.report[month].subscription + parseFloat(item.amount);
+            }
+            if (item.mode == 6 && item.status == 1) {
+              this.report[month].subscription =
+                this.report[month].subscription - parseFloat(item.amount);
             }
             if (item.mode == 4 && item.status == 2) {
               this.report[month].offline_payment =
