@@ -80,6 +80,7 @@
                   <thead>
                     <tr>
                       <th>Month</th>
+                      <th class="text-center">Count</th>
                       <th class="text-center">Payment</th>
                       <th class="text-center">Refund</th>
                       <th class="text-center">Offline Paymnent</th>
@@ -94,6 +95,9 @@
                     <tr v-for="(item, index) in report" :key="index">
                       <td>
                         {{ item.name }}
+                      </td>
+                      <td class="text-center">
+                        {{ formatPrice(roundUpAmount(item.count)) }}
                       </td>
                       <td class="text-center">
                         {{
@@ -273,6 +277,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          count: 0,
           
         },
         {
@@ -283,7 +288,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
-          
+          count: 0,
         },
         {
           name: "Mar",
@@ -293,7 +298,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
-          
+          count: 0,
         },
         {
           name: "Apr",
@@ -303,7 +308,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
-          
+          count: 0,
         },
         {
           name: "May",
@@ -313,7 +318,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
-          
+          count: 0,
         },
         {
           name: "Jun",
@@ -323,7 +328,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
-                    
+          count: 0, 
         },
         {
           name: "Jul",
@@ -333,7 +338,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
-          
+          count: 0,
         },
         {
           name: "Aug",
@@ -343,7 +348,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
-          
+          count: 0,
         },
         {
           name: "Sep",
@@ -353,7 +358,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
-          
+          count: 0,
         },
         {
           name: "Oct",
@@ -363,7 +368,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
-          
+          count: 0,
         },
         {
           name: "Nov",
@@ -373,7 +378,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
-          
+          count: 0,
         },
         {
           name: "Dec",
@@ -383,7 +388,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
-          
+          count: 0,
         },
       ],
     };
@@ -438,6 +443,7 @@ export default {
         item.fee = 0;
         item.refund = 0;
         item.subscription = 0;
+        item.count = 0;
       });
       console.log(this.company);
       if (!this.company) this.company = {};
@@ -452,6 +458,7 @@ export default {
           resp.data.forEach((item) => {
             var month = new Date(String(item.date)).getMonth();
             if (item.mode == 3 && item.status == 1) {
+              this.report[month].count -= 1
               this.report[month].refund =
                 this.report[month].refund + parseFloat(item.amount);
                 this.report[month].online_payment =
@@ -466,6 +473,7 @@ export default {
                 this.report[month].fee + parseFloat(amount);
             }
             if (item.mode == 3 && item.status == 2) {
+              this.report[month].count += 1 
               this.report[month].online_payment =
                 this.report[month].online_payment + parseFloat(item.amount);
             }
