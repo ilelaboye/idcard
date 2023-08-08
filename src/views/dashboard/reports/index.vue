@@ -44,6 +44,20 @@
             Refunds History
           </button>
         </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="pills-history-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#pills-airtime"
+            type="button"
+            role="tab"
+            aria-controls="pills-airtime"
+            aria-selected="false"
+          >
+            Airtime History
+          </button>
+        </li>
       </ul>
     </div>
     <div class="order-body">
@@ -250,6 +264,54 @@
             </div>
           </div>
         </div>
+        <div
+          class="tab-pane fade"
+          id="pills-airtime"
+          role="tabpanel"
+          aria-labelledby="pills-airtime-tab"
+        >
+          <div class="card">
+            <div class="card-body pt-2">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Company Name</th>
+                      <th>Amount</th>
+                      <th>Partner</th>
+                      <th>Order No</th>
+                      <th>Status</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, index) in airtimeHistory" :key="index">
+                      <td>{{ item.companyName }}</td>
+                      <td>{{ item.amount }}</td>
+                      <td>{{ item.method }}</td>
+                      <td>
+                        <span
+                          class="badge"
+                          :class="
+                            item.status == 1 
+                              ? 'badge-success'
+                              : 'badge-danger'
+                          "
+                          >
+                          <span v-if="item.status == 1">Success</span>
+                          <span v-else-if="item.status == 2">Failed</span>
+                          <span v-else></span>
+                        </span>
+                      </td>
+                      <td>{{ item.orderNo }}</td>
+                      <td>{{ formatDateTimeSecond(item.updatedAt) }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -269,6 +331,7 @@ export default {
       companies: [],
       termiiHistory: [],
       refundsHistory: [],
+      airtimeHistory: [],
       vat_percent: 0,
       report: [
         {
@@ -444,6 +507,17 @@ export default {
           this.refundsHistory = resp.data;
         });
     },
+    getAirtimeHistory(page) {
+      this.$store
+        .dispatch(
+          "get",
+          `airtime/${this.$store.state.user.id}?page=${page}`
+        )
+        .then((resp) => {
+          console.log(resp);
+          this.airtimeHistory = resp.data.airtime;
+        });
+    },
     getReports() {
       this.$store.commit("setLoader", true);
       this.report.forEach((item) => {
@@ -499,6 +573,7 @@ export default {
                 this.report[month].subscription - parseFloat(item.amount);
             }
             if (item.mode == 4 && item.status == 2) {
+              this.report[month].count += 1 
               this.report[month].offline_payment =
                 this.report[month].offline_payment + parseFloat(item.amount);
             }
@@ -518,6 +593,7 @@ export default {
     this.getCompanies();
     this.getTermiiHistory();
     this.getRefundsHistory();
+    this.getAirtimeHistory();
   },
 };
 </script>
