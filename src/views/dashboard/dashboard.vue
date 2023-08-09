@@ -37,6 +37,36 @@
           <div class="card">
             <a href="javascript:void()" class="d-flex">
               <div class="stat-no">
+                <h6>{{ formatPrice(roundUpAmount(balances?.paystack || 0)) }}</h6>
+                <p class="text-muted">Paystack Balance</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="col-sm-3 mb-3">
+          <div class="card">
+            <a href="javascript:void()" class="d-flex">
+              <div class="stat-no">
+                <h6>{{ formatPrice(roundUpAmount(balances?.psb || 0)) }}</h6>
+                <p class="text-muted">9PSB Balance</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="col-sm-3 mb-3">
+          <div class="card">
+            <a href="javascript:void()" class="d-flex">
+              <div class="stat-no">
+                <h6>{{ formatPrice(roundUpAmount(balances?.allCompany || 0)) }}</h6>
+                <p class="text-muted">All Company Balance</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="col-sm-3 mb-3">
+          <div class="card">
+            <a href="javascript:void()" class="d-flex">
+              <div class="stat-no">
                 <h6>{{ formatPrice(roundUpAmount(balances.termii)) }}</h6>
                 <p class="text-muted">Termii Balance</p>
               </div>

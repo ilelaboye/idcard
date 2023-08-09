@@ -30,6 +30,20 @@
             Termii History
           </button>
         </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="pills-history-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#pills-refunds"
+            type="button"
+            role="tab"
+            aria-controls="pills-refunds"
+            aria-selected="false"
+          >
+            Refunds History
+          </button>
+        </li>
       </ul>
     </div>
     <div class="order-body">
@@ -66,6 +80,7 @@
                   <thead>
                     <tr>
                       <th>Month</th>
+                      <th class="text-center">Count</th>
                       <th class="text-center">Payment</th>
                       <th class="text-center">Refund</th>
                       <th class="text-center">Offline Paymnent</th>
@@ -80,6 +95,9 @@
                     <tr v-for="(item, index) in report" :key="index">
                       <td>
                         {{ item.name }}
+                      </td>
+                      <td class="text-center">
+                        {{ formatPrice(roundUpAmount(item.count)) }}
                       </td>
                       <td class="text-center">
                         {{
@@ -193,6 +211,45 @@
             </div>
           </div>
         </div>
+        <div
+          class="tab-pane fade"
+          id="pills-refunds"
+          role="tabpanel"
+          aria-labelledby="pills-refunds-tab"
+        >
+          <div class="card">
+            <div class="card-body pt-2">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Company Name</th>
+                      <th>Amount</th>
+                      <th>Mode</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, index) in refundsHistory" :key="index">
+                      <td>{{ item.companyName }}</td>
+                      <td>{{ item.amountRefunded }}</td>
+                      <td>
+                        <span v-if="item.mode == 1">Wallet</span>
+                        <span v-else-if="item.mode == 2">Purchases</span>
+                        <span v-else-if="item.mode == 3">Online Payment</span>
+                        <span v-else-if="item.mode == 4">Offline Payment</span>
+                        <span v-else-if="item.mode == 6">Subscription</span>
+                        <span v-else-if="item.mode == 7">Fee</span>
+                        <span v-else></span>
+                      </td>
+                      <td>{{ formatDateTimeSecond(item.date) }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -211,6 +268,7 @@ export default {
       company: {},
       companies: [],
       termiiHistory: [],
+      refundsHistory: [],
       vat_percent: 0,
       report: [
         {
@@ -222,6 +280,7 @@ export default {
           refund: 0,
           subscription: 0,
           subRefund: 0,
+          count: 0,
         },
         {
           name: "Feb",
@@ -232,6 +291,7 @@ export default {
           refund: 0,
           subscription: 0,
           subRefund: 0,
+          count: 0,
         },
         {
           name: "Mar",
@@ -242,6 +302,7 @@ export default {
           refund: 0,
           subscription: 0,
           subRefund: 0,
+          count: 0,
         },
         {
           name: "Apr",
@@ -252,6 +313,7 @@ export default {
           refund: 0,
           subscription: 0,
           subRefund: 0,
+          count: 0,
         },
         {
           name: "May",
@@ -262,6 +324,7 @@ export default {
           refund: 0,
           subscription: 0,
           subRefund: 0,
+          count: 0,
         },
         {
           name: "Jun",
@@ -272,6 +335,7 @@ export default {
           refund: 0,
           subscription: 0,
           subRefund: 0,
+          count: 0,
         },
         {
           name: "Jul",
@@ -282,6 +346,7 @@ export default {
           refund: 0,
           subscription: 0,
           subRefund: 0,
+          count: 0,
         },
         {
           name: "Aug",
@@ -292,6 +357,7 @@ export default {
           refund: 0,
           subscription: 0,
           subRefund: 0,
+          count: 0,
         },
         {
           name: "Sep",
@@ -302,6 +368,7 @@ export default {
           refund: 0,
           subscription: 0,
           subRefund: 0,
+          count: 0,
         },
         {
           name: "Oct",
@@ -312,6 +379,7 @@ export default {
           refund: 0,
           subscription: 0,
           subRefund: 0,
+          count: 0,
         },
         {
           name: "Nov",
@@ -322,6 +390,7 @@ export default {
           refund: 0,
           subscription: 0,
           subRefund: 0,
+          count: 0,
         },
         {
           name: "Dec",
@@ -332,6 +401,7 @@ export default {
           refund: 0,
           subscription: 0,
           subRefund: 0,
+          count: 0,
         },
       ],
     };
@@ -366,6 +436,14 @@ export default {
           this.termiiHistory = resp.data.termiiHistory;
         });
     },
+    getRefundsHistory(page = 1) {
+      this.$store
+        .dispatch("get", `refunds/${this.$store.state.user.id}?page=${page}`)
+        .then((resp) => {
+          console.log(resp);
+          this.refundsHistory = resp.data;
+        });
+    },
     getReports() {
       this.$store.commit("setLoader", true);
       this.report.forEach((item) => {
@@ -376,6 +454,7 @@ export default {
         item.refund = 0;
         item.subscription = 0;
         item.subRefund = 0;
+        item.count = 0;
       });
       console.log(this.company);
       if (!this.company) this.company = {};
@@ -390,8 +469,11 @@ export default {
           resp.data.forEach((item) => {
             var month = new Date(String(item.date)).getMonth();
             if (item.mode == 3 && item.status == 1) {
+              this.report[month].count -= 1;
               this.report[month].refund =
                 this.report[month].refund + parseFloat(item.amount);
+              this.report[month].online_payment =
+                this.report[month].online_payment - parseFloat(item.amount);
             }
             if (item.mode == 3 && item.status == 2) {
               var amount = item.fees;
@@ -402,6 +484,7 @@ export default {
                 this.report[month].fee + parseFloat(amount);
             }
             if (item.mode == 3 && item.status == 2) {
+              this.report[month].count += 1;
               this.report[month].online_payment =
                 this.report[month].online_payment + parseFloat(item.amount);
             }
@@ -412,6 +495,8 @@ export default {
             if (item.mode == 6 && item.status == 1) {
               this.report[month].subRefund =
                 this.report[month].subRefund + parseFloat(item.amount);
+              this.report[month].subscription =
+                this.report[month].subscription - parseFloat(item.amount);
             }
             if (item.mode == 4 && item.status == 2) {
               this.report[month].offline_payment =
@@ -432,6 +517,7 @@ export default {
     this.getReports();
     this.getCompanies();
     this.getTermiiHistory();
+    this.getRefundsHistory();
   },
 };
 </script>
