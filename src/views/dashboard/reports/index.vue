@@ -112,6 +112,7 @@
                           formatPrice(
                             roundUpAmount(
                               parseFloat(item.subscription) -
+                                parseFloat(item.subRefund) -
                                 parseFloat(calculateVAT(item.subscription))
                             )
                           )
@@ -124,6 +125,7 @@
                               parseFloat(item.fee) -
                                 parseFloat(calculateVAT(item.fee)) +
                                 (parseFloat(item.subscription) -
+                                  parseFloat(item.subRefund) -
                                   parseFloat(calculateVAT(item.subscription)))
                             )
                           )
@@ -219,6 +221,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          subRefund: 0,
         },
         {
           name: "Feb",
@@ -228,6 +231,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          subRefund: 0,
         },
         {
           name: "Mar",
@@ -237,6 +241,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          subRefund: 0,
         },
         {
           name: "Apr",
@@ -246,6 +251,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          subRefund: 0,
         },
         {
           name: "May",
@@ -255,6 +261,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          subRefund: 0,
         },
         {
           name: "Jun",
@@ -264,6 +271,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          subRefund: 0,
         },
         {
           name: "Jul",
@@ -273,6 +281,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          subRefund: 0,
         },
         {
           name: "Aug",
@@ -282,6 +291,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          subRefund: 0,
         },
         {
           name: "Sep",
@@ -291,6 +301,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          subRefund: 0,
         },
         {
           name: "Oct",
@@ -300,6 +311,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          subRefund: 0,
         },
         {
           name: "Nov",
@@ -309,6 +321,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          subRefund: 0,
         },
         {
           name: "Dec",
@@ -318,6 +331,7 @@ export default {
           fee: 0,
           refund: 0,
           subscription: 0,
+          subRefund: 0,
         },
       ],
     };
@@ -361,6 +375,7 @@ export default {
         item.fee = 0;
         item.refund = 0;
         item.subscription = 0;
+        item.subRefund = 0;
       });
       console.log(this.company);
       if (!this.company) this.company = {};
@@ -394,14 +409,15 @@ export default {
               this.report[month].subscription =
                 this.report[month].subscription + parseFloat(item.amount);
             }
+            if (item.mode == 6 && item.status == 1) {
+              this.report[month].subRefund =
+                this.report[month].subRefund + parseFloat(item.amount);
+            }
             if (item.mode == 4 && item.status == 2) {
               this.report[month].offline_payment =
                 this.report[month].offline_payment + parseFloat(item.amount);
             }
             if (item.mode == 1 && item.status == 1) {
-              // if (month == 5) {
-              //   count.push(`${item.id} - ${item.date}`);
-              // }
               this.report[month].wallet_inflow =
                 this.report[month].wallet_inflow + parseFloat(item.amount);
             }

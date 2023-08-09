@@ -71,7 +71,17 @@
           role="tabpanel"
           aria-labelledby="pills-details-tab"
         >
-          <h4 class="card-title">Company details</h4>
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h4 class="card-title mb-0">Company details</h4>
+            <button
+              class="btn btn-primary f-13"
+              data-bs-target="#fundWallet"
+              data-bs-toggle="modal"
+            >
+              Temporary Fund Wallet
+            </button>
+          </div>
+
           <div class="kpi">
             <div class="row stat-wrap">
               <div class="col-sm-3 mb-3">
@@ -628,10 +638,77 @@
         </div>
       </div>
     </div>
+
+    <div
+      class="modal fade"
+      id="fundWallet"
+      tabindex="-1"
+      aria-labelledby="fundWalletLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 class="modal-title" id="fundWalletLabel">
+              Temporary fund Wallet
+            </h6>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="">
+              <div class="form-group">
+                <label class="f-13">Amount</label>
+                <input
+                  type="text"
+                  class="form-control f-14"
+                  v-model="fund.amount"
+                />
+              </div>
+              <div class="form-group duration">
+                <label class="f-13">Duration</label>
+                <div class="input-group mb-3">
+                  <input
+                    type="number"
+                    v-model="fund.durationPeriod"
+                    class="form-control f-14"
+                  />
+                  <span class="input-group-text px-2" id="basic-addon2">
+                    <select
+                      v-model="fund.durationMode"
+                      class="form-control f-14"
+                    >
+                      <option value="minutes">Minutes</option>
+                      <option value="days">Days</option>
+                      <option value="weeks">Weeks</option>
+                      <option value="months">Month</option>
+                    </select>
+                    <i class="fa fa-chevron-down"></i>
+                  </span>
+                </div>
+              </div>
+              <button
+                class="btn btn-primary w-100"
+                :disabled="loading"
+                @click.prevent="fundWallet()"
+              >
+                <span v-if="!loading">Fund</span>
+                <span v-else>Loading...</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -643,6 +720,11 @@ export default {
       selectedPayment: {},
       loading: false,
       newStatus: "",
+      fund: {
+        amount: 0,
+        durationMode: "minutes",
+        durationPeriod: 0,
+      },
     };
   },
   methods: {
@@ -667,15 +749,30 @@ export default {
     },
     reprocessPayment(paymentNo) {
       this.$store.commit("setLoader", true);
-      this.$store
-        .dispatch("post", {
-          endpoint: `payments/reprocess/${this.$store.state.user.id}`,
-          details: { companyId: this.$route.params.id, paymentNo: paymentNo },
-        })
-        .then((resp) => {
+      axios
+        .post(
+          `${this.$store.state.base_url}/payments/reprocess/${this.$store.state.user.id}`,
+          { companyId: this.$route.params.id, paymentNo: paymentNo }
+        )
+        .then((data) => {
           this.$store.commit("setLoader", false);
-          console.log(resp);
+          window.ToasterAlert("success", "Payment reprocessed successfully");
+          console.log(data);
+        })
+        .catch((error) => {
+          this.$store.commit("setLoader", false);
+          this.$store.dispatch("handleError", error);
+          console.log(error);
         });
+      // this.$store
+      //   .dispatch("post", {
+      //     endpoint: `payments/reprocess/${this.$store.state.user.id}`,
+      //     details: { companyId: this.$route.params.id, paymentNo: paymentNo },
+      //   })
+      //   .then((resp) => {
+      //     this.$store.commit("setLoader", false);
+      //     console.log(resp);
+      //   });
     },
     getCompany() {
       this.$store
@@ -758,6 +855,26 @@ export default {
           this.$store.commit("setLoader", false);
         });
     },
+    fundWallet() {
+      if (this.fund.amount < 1) {
+        window.ToasterAlert("error", "Amount is required");
+        return false;
+      }
+      if (this.fund.durationPeriod < 1) {
+        window.ToasterAlert("error", "Duration period is required");
+        return false;
+      }
+      this.$store.commit("setLoader", true);
+      this.$store
+        .dispatch("post", {
+          endpoint: `tempcredit/${this.$store.state.user.id}`,
+          details: { ...this.fund, companyId: this.$route.params.id },
+        })
+        .then((resp) => {
+          this.$store.commit("setLoader", false);
+          console.log(resp);
+        });
+    },
   },
   created() {
     this.getCompany();
@@ -815,6 +932,15 @@ export default {
           margin-bottom: 0;
         }
       }
+    }
+  }
+  .duration {
+    .input-group-text {
+      padding: 0;
+      background: #fff;
+    }
+    select {
+      border: none;
     }
   }
 }

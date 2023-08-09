@@ -10,6 +10,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     endpoint: process.env.VUE_APP_ENDPOINT,
+    base_url: process.env.VUE_APP_BASE_URL,
     // notification: {
     //   type: 0,
     //   message: "",

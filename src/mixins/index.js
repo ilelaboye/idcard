@@ -12,7 +12,7 @@ export default {
     },
     formatDateTime(value) {
       var hold = new Date(value).toDateString().split(" ");
-      return `${hold[2]} ${hold[1]}' ${hold[3][2]}${hold[3][3]}`;
+      return `${hold[2]} ${hold[1]} '${hold[3][2]}${hold[3][3]}`;
     },
     formatDateToLocalDate(value) {
       return new Date(value).toLocaleDateString();
