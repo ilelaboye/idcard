@@ -94,11 +94,13 @@
                   <thead>
                     <tr>
                       <th>Month</th>
-                      <th class="text-center">Count</th>
-                      <th class="text-center">Payment</th>
+                      <th class="text-center">Payment Count</th>
+                      <th class="text-center">Payment Value</th>
                       <th class="text-center">Refund</th>
-                      <th class="text-center">Offline Paymnent</th>
+                      <th class="text-center">Offline Value</th>
+                      <th class="text-center">Offline Count</th>
                       <th class="text-center">Wallet Inflow</th>
+                      <th class="text-center">Wallet Count</th>
                       <th class="text-center">Fee Based</th>
                       <th class="text-center">Subscription</th>
                       <th class="text-center">Total Revenue</th>
@@ -127,7 +129,13 @@
                         {{ formatPrice(roundUpAmount(item.offline_payment)) }}
                       </td>
                       <td class="text-center">
+                        {{ formatPrice(roundUpAmount(item.offlineCount)) }}
+                      </td>
+                      <td class="text-center">
                         {{ formatPrice(roundUpAmount(item.wallet_inflow)) }}
+                      </td>
+                      <td class="text-center">
+                        {{ formatPrice(roundUpAmount(item.inflowCount)) }}
                       </td>
                       <td class="text-center">
                         {{
@@ -344,6 +352,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Feb",
@@ -355,6 +365,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Mar",
@@ -366,6 +378,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Apr",
@@ -377,6 +391,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "May",
@@ -388,6 +404,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Jun",
@@ -399,6 +417,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Jul",
@@ -410,6 +430,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Aug",
@@ -421,6 +443,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Sep",
@@ -432,6 +456,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Oct",
@@ -443,6 +469,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Nov",
@@ -454,6 +482,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Dec",
@@ -465,6 +495,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
       ],
     };
@@ -573,11 +605,12 @@ export default {
                 this.report[month].subscription - parseFloat(item.amount);
             }
             if (item.mode == 4 && item.status == 2) {
-              this.report[month].count += 1 
+              this.report[month].offlineCount += 1 
               this.report[month].offline_payment =
                 this.report[month].offline_payment + parseFloat(item.amount);
             }
             if (item.mode == 1 && item.status == 1) {
+              this.report[month].inflowCount += 1 
               this.report[month].wallet_inflow =
                 this.report[month].wallet_inflow + parseFloat(item.amount);
             }
