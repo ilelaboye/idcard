@@ -44,6 +44,20 @@
             Refunds History
           </button>
         </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="pills-history-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#pills-airtime"
+            type="button"
+            role="tab"
+            aria-controls="pills-airtime"
+            aria-selected="false"
+          >
+            Airtime History
+          </button>
+        </li>
       </ul>
     </div>
     <div class="order-body">
@@ -80,11 +94,13 @@
                   <thead>
                     <tr>
                       <th>Month</th>
-                      <th class="text-center">Count</th>
-                      <th class="text-center">Payment</th>
+                      <th class="text-center">Payment Count</th>
+                      <th class="text-center">Payment Value</th>
                       <th class="text-center">Refund</th>
-                      <th class="text-center">Offline Paymnent</th>
+                      <th class="text-center">Offline Value</th>
+                      <th class="text-center">Offline Count</th>
                       <th class="text-center">Wallet Inflow</th>
+                      <th class="text-center">Wallet Count</th>
                       <th class="text-center">Fee Based</th>
                       <th class="text-center">Subscription</th>
                       <th class="text-center">Total Revenue</th>
@@ -113,7 +129,13 @@
                         {{ formatPrice(roundUpAmount(item.offline_payment)) }}
                       </td>
                       <td class="text-center">
+                        {{ formatPrice(roundUpAmount(item.offlineCount)) }}
+                      </td>
+                      <td class="text-center">
                         {{ formatPrice(roundUpAmount(item.wallet_inflow)) }}
+                      </td>
+                      <td class="text-center">
+                        {{ formatPrice(roundUpAmount(item.inflowCount)) }}
                       </td>
                       <td class="text-center">
                         {{
@@ -250,6 +272,54 @@
             </div>
           </div>
         </div>
+        <div
+          class="tab-pane fade"
+          id="pills-airtime"
+          role="tabpanel"
+          aria-labelledby="pills-airtime-tab"
+        >
+          <div class="card">
+            <div class="card-body pt-2">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Company Name</th>
+                      <th>Amount</th>
+                      <th>Partner</th>
+                      <th>Order No</th>
+                      <th>Status</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, index) in airtimeHistory" :key="index">
+                      <td>{{ item.companyName }}</td>
+                      <td>{{ item.amount }}</td>
+                      <td>{{ item.method }}</td>
+                      <td>
+                        <span
+                          class="badge"
+                          :class="
+                            item.status == 1 
+                              ? 'badge-success'
+                              : 'badge-danger'
+                          "
+                          >
+                          <span v-if="item.status == 1">Success</span>
+                          <span v-else-if="item.status == 2">Failed</span>
+                          <span v-else></span>
+                        </span>
+                      </td>
+                      <td>{{ item.orderNo }}</td>
+                      <td>{{ formatDateTimeSecond(item.updatedAt) }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -269,6 +339,7 @@ export default {
       companies: [],
       termiiHistory: [],
       refundsHistory: [],
+      airtimeHistory: [],
       vat_percent: 0,
       report: [
         {
@@ -281,6 +352,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Feb",
@@ -292,6 +365,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Mar",
@@ -303,6 +378,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Apr",
@@ -314,6 +391,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "May",
@@ -325,6 +404,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Jun",
@@ -336,6 +417,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Jul",
@@ -347,6 +430,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Aug",
@@ -358,6 +443,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Sep",
@@ -369,6 +456,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Oct",
@@ -380,6 +469,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Nov",
@@ -391,6 +482,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
         {
           name: "Dec",
@@ -402,6 +495,8 @@ export default {
           subscription: 0,
           subRefund: 0,
           count: 0,
+          offlineCount: 0,
+          inflowCount: 0,
         },
       ],
     };
@@ -442,6 +537,17 @@ export default {
         .then((resp) => {
           console.log(resp);
           this.refundsHistory = resp.data;
+        });
+    },
+    getAirtimeHistory(page) {
+      this.$store
+        .dispatch(
+          "get",
+          `airtime/${this.$store.state.user.id}?page=${page}`
+        )
+        .then((resp) => {
+          console.log(resp);
+          this.airtimeHistory = resp.data.airtime;
         });
     },
     getReports() {
@@ -499,10 +605,12 @@ export default {
                 this.report[month].subscription - parseFloat(item.amount);
             }
             if (item.mode == 4 && item.status == 2) {
+              this.report[month].offlineCount += 1 
               this.report[month].offline_payment =
                 this.report[month].offline_payment + parseFloat(item.amount);
             }
             if (item.mode == 1 && item.status == 1) {
+              this.report[month].inflowCount += 1 
               this.report[month].wallet_inflow =
                 this.report[month].wallet_inflow + parseFloat(item.amount);
             }
@@ -518,6 +626,7 @@ export default {
     this.getCompanies();
     this.getTermiiHistory();
     this.getRefundsHistory();
+    this.getAirtimeHistory();
   },
 };
 </script>
