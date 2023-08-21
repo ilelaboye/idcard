@@ -73,13 +73,22 @@
         >
           <div class="d-flex justify-content-between align-items-center mb-2">
             <h4 class="card-title mb-0">Company details</h4>
-            <button
-              class="btn btn-primary f-13"
-              data-bs-target="#fundWallet"
-              data-bs-toggle="modal"
-            >
-              Temporary Fund Wallet
-            </button>
+            <div>
+              <button
+                class="btn btn-primary f-13"
+                data-bs-target="#fundWallet"
+                data-bs-toggle="modal"
+              >
+                Temporary Fund Wallet
+              </button>
+              <button
+                class="btn btn-primary f-13 ms-1"
+                data-bs-target="#refundWallet"
+                data-bs-toggle="modal"
+              >
+                Refund
+              </button>
+            </div>
           </div>
 
           <div class="kpi">
@@ -704,6 +713,48 @@
         </div>
       </div>
     </div>
+
+    <div
+      class="modal fade"
+      id="refundWallet"
+      tabindex="-1"
+      aria-labelledby="refundWalletLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 class="modal-title" id="refundWalletLabel">Refund Wallet</h6>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form action="">
+              <div class="form-group">
+                <label class="f-13">Transaction No</label>
+                <input
+                  type="text"
+                  class="form-control f-14"
+                  v-model="refund_trans_no"
+                />
+              </div>
+              <button
+                class="btn btn-primary w-100"
+                :disabled="loading"
+                @click.prevent="refundWallet()"
+              >
+                <span v-if="!loading">Refund</span>
+                <span v-else>Loading...</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -720,6 +771,7 @@ export default {
       selectedPayment: {},
       loading: false,
       newStatus: "",
+      refund_trans_no: "",
       fund: {
         amount: 0,
         durationMode: "minutes",
@@ -745,6 +797,30 @@ export default {
         .then(() => {
           this.$store.commit("setLoader", false);
           window.location.reload();
+        });
+    },
+    refundWallet() {
+      if (this.refund_trans_no.length < 1) {
+        window.ToasterAlert("error", "Invalid transaction number");
+        return false;
+      }
+      this.$store.commit("setLoader", true);
+      this.$store
+        .dispatch("post", {
+          endpoint: `refunds/${this.$store.state.user.id}`,
+          details: {
+            transactionNo: this.refund_trans_no,
+            companyId: this.$route.params.id,
+          },
+        })
+        .then((resp) => {
+          this.$store.commit("setLoader", false);
+          window.ToasterAlert("success", "Payment refund successfully");
+          console.log(resp);
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
         });
     },
     reprocessPayment(paymentNo) {
