@@ -1,6 +1,5 @@
 window.addEventListener("DOMContentLoaded", (event) => {
   feather.replace();
-  // Toggle the side navigation
   const sidebarToggle = document.body.querySelector("#sidebarToggle");
   if (sidebarToggle) {
     // Uncomment Below to persist sidebar toggle between refreshes
