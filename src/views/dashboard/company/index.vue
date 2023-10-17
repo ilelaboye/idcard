@@ -29,6 +29,7 @@
                   <th>RC No</th>
                   <th>Verification Status</th>
                   <th>Delivery Address</th>
+                  <th>Ref Code</th>
                   <!-- <th>Delivery City</th>
                   <th>Delivery State</th> -->
                   <th>VAT No</th>
@@ -73,6 +74,9 @@
                     <span v-if="company.state">{{
                       JSON.parse(company.state).state
                     }}</span>
+                  </td>
+                  <td>
+                    {{ company.ref_code }}
                   </td>
                   <td>
                     {{ company.vat_number }}
