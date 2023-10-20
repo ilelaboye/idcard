@@ -58,6 +58,20 @@
             Airtime History
           </button>
         </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="pills-history-tab"
+            data-bs-toggle="pill"
+            data-bs-target="#pills-double-debit"
+            type="button"
+            role="tab"
+            aria-controls="pills-double-debit"
+            aria-selected="false"
+          >
+            Double Debit History
+          </button>
+        </li>
       </ul>
     </div>
     <div class="order-body">
@@ -320,12 +334,77 @@
             </div>
           </div>
         </div>
+        <div
+          class="tab-pane fade"
+          id="pills-double-debit"
+          role="tabpanel"
+          aria-labelledby="pills-double-debit-tab"
+        >
+          <div class="card">
+            <div class="card-body pt-2">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Action</th>
+                      <th>Company Name</th>
+                      <th>Amount</th>
+                      <th>Mode</th>
+                      <th>Transaction No</th>
+                      <th>Status</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(item, index) in doubleDebitHistory" :key="index">
+                      <button
+                        class="btn btn-primary f-13"
+                        @click.prevent="refundTransaction(item.transaction_no, item.company_id)"
+                        v-if="item.refunded == 0"
+                      >
+                        Refund
+                      </button>
+                      <td>{{ item.companyName }}</td>
+                      <td>{{ formatPrice(item.amount) }}</td>
+                      <td>
+                        <span v-if="item.mode == 1">Wallet</span>
+                        <span v-else-if="item.mode == 2">Purchases</span>
+                        <span v-else-if="item.mode == 3">Online Payment</span>
+                        <span v-else-if="item.mode == 4">Offline Payment</span>
+                        <span v-else-if="item.mode == 6">Subscription</span>
+                        <span v-else-if="item.mode == 7">Fee</span>
+                        <span v-else></span>
+                      </td>
+                      <td>{{ item.transaction_no }}</td>
+                      <td>
+                        <span
+                          class="badge"
+                          :class="
+                            item.refunded == 1 
+                              ? 'badge-success'
+                              : 'badge-danger'
+                          "
+                          >
+                          <span v-if="item.refunded == 1">Refunded</span>
+                          <span v-else-if="item.refunded == 0">Not Refunded</span>
+                          <span v-else></span>
+                        </span>
+                      </td>
+                      <td>{{ formatDateTime(item.date) }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import Multiselect from "vue-multiselect";
 import "vue-multiselect/dist/vue-multiselect.min.css";
 export default {
@@ -340,6 +419,7 @@ export default {
       termiiHistory: [],
       refundsHistory: [],
       airtimeHistory: [],
+      doubleDebitHistory: [],
       vat_percent: 0,
       report: [
         {
@@ -550,6 +630,44 @@ export default {
           this.airtimeHistory = resp.data.airtime;
         });
     },
+    getDoubleDebitHistory(page) {
+      this.$store
+        .dispatch(
+          "get",
+          `refunds/doubledebits/${this.$store.state.user.id}?page=${page}`
+        )
+        .then((resp) => {
+          console.log(resp);
+          this.doubleDebitHistory = resp.data.doubleDebits;
+        });
+    },
+    refundTransaction(transactionNo, companyId) {
+      this.$store.commit("setLoader", true);
+      axios
+        .post(
+          `${this.$store.state.base_url}/refunds/${this.$store.state.user.id}`,
+          { companyId, transactionNo }
+        )
+        .then((data) => {
+          this.$store.commit("setLoader", false);
+          window.ToasterAlert("success", "Transaction refunded successfully");
+          console.log(data);
+        })
+        .catch((error) => {
+          this.$store.commit("setLoader", false);
+          this.$store.dispatch("handleError", error);
+          console.log(error);
+        });
+      // this.$store
+      //   .dispatch("post", {
+      //     endpoint: `payments/reprocess/${this.$store.state.user.id}`,
+      //     details: { companyId: this.$route.params.id, paymentNo: paymentNo },
+      //   })
+      //   .then((resp) => {
+      //     this.$store.commit("setLoader", false);
+      //     console.log(resp);
+      //   });
+    },
     getReports() {
       this.$store.commit("setLoader", true);
       this.report.forEach((item) => {
@@ -627,6 +745,7 @@ export default {
     this.getTermiiHistory();
     this.getRefundsHistory();
     this.getAirtimeHistory();
+    this.getDoubleDebitHistory();
   },
 };
 </script>
