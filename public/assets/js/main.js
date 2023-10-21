@@ -16,7 +16,6 @@ window.addEventListener("load", (event) => {
       );
     });
   }
-
   document
     .querySelector("#page-content-wrapper")
     .addEventListener("touchstart", myFunction);
