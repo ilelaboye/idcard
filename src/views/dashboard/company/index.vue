@@ -26,6 +26,8 @@
                   <th>Slug</th>
                   <th>Account No</th>
                   <th>Account Balance</th>
+                  <th>Plan</th>
+                  <th>Plan Renewal</th>
                   <th>RC No</th>
                   <th>Verification Status</th>
                   <th>Delivery Address</th>
@@ -55,6 +57,8 @@
                   <td>{{ company.company_slug }}</td>
                   <td>{{ company.account_number }}</td>
                   <td>₦{{ formatPrice(company.account_balance) }}</td>
+                  <td>{{ company.plan }}</td>
+                  <td>{{ formatDateTime(company.planEnd) }}</td>
                   <td>
                     {{ company.rc_number }}
                   </td>

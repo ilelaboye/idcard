@@ -117,7 +117,8 @@
                       <th class="text-center">Wallet Count</th>
                       <th class="text-center">Fee Based</th>
                       <th class="text-center">Subscription</th>
-                      <th class="text-center">Total Revenue</th>
+                      <th class="text-center">Payment Revenue</th>
+                      <th class="text-center">Airtime Revenue</th>
                       <th class="text-center">VAT</th>
                     </tr>
                   </thead>
@@ -189,8 +190,19 @@
                         {{
                           formatPrice(
                             roundUpAmount(
+                              parseFloat(item.airtimeRevenue) -
+                                parseFloat(calculateVAT(item.airtimeRevenue))
+                            )
+                          )
+                        }}
+                      </td>
+                      <td class="text-center">
+                        {{
+                          formatPrice(
+                            roundUpAmount(
                               calculateVAT(item.fee) +
-                                calculateVAT(item.subscription)
+                                calculateVAT(item.subscription) + 
+                                calculateVAT(item.airtimeRevenue) 
                             )
                           )
                         }}
@@ -434,6 +446,7 @@ export default {
           count: 0,
           offlineCount: 0,
           inflowCount: 0,
+          airtimeRevenue: 0,
         },
         {
           name: "Feb",
@@ -447,6 +460,7 @@ export default {
           count: 0,
           offlineCount: 0,
           inflowCount: 0,
+          airtimeRevenue: 0,
         },
         {
           name: "Mar",
@@ -460,6 +474,7 @@ export default {
           count: 0,
           offlineCount: 0,
           inflowCount: 0,
+          airtimeRevenue: 0,
         },
         {
           name: "Apr",
@@ -473,6 +488,7 @@ export default {
           count: 0,
           offlineCount: 0,
           inflowCount: 0,
+          airtimeRevenue: 0,
         },
         {
           name: "May",
@@ -486,6 +502,7 @@ export default {
           count: 0,
           offlineCount: 0,
           inflowCount: 0,
+          airtimeRevenue: 0,
         },
         {
           name: "Jun",
@@ -499,6 +516,7 @@ export default {
           count: 0,
           offlineCount: 0,
           inflowCount: 0,
+          airtimeRevenue: 0,
         },
         {
           name: "Jul",
@@ -512,6 +530,7 @@ export default {
           count: 0,
           offlineCount: 0,
           inflowCount: 0,
+          airtimeRevenue: 0,
         },
         {
           name: "Aug",
@@ -525,6 +544,7 @@ export default {
           count: 0,
           offlineCount: 0,
           inflowCount: 0,
+          airtimeRevenue: 0,
         },
         {
           name: "Sep",
@@ -538,6 +558,7 @@ export default {
           count: 0,
           offlineCount: 0,
           inflowCount: 0,
+          airtimeRevenue: 0,
         },
         {
           name: "Oct",
@@ -551,6 +572,7 @@ export default {
           count: 0,
           offlineCount: 0,
           inflowCount: 0,
+          airtimeRevenue: 0,
         },
         {
           name: "Nov",
@@ -564,6 +586,7 @@ export default {
           count: 0,
           offlineCount: 0,
           inflowCount: 0,
+          airtimeRevenue: 0,
         },
         {
           name: "Dec",
@@ -577,6 +600,7 @@ export default {
           count: 0,
           offlineCount: 0,
           inflowCount: 0,
+          airtimeRevenue: 0,
         },
       ],
     };
@@ -628,6 +652,69 @@ export default {
         .then((resp) => {
           console.log(resp);
           this.airtimeHistory = resp.data.airtime;
+          resp.data.airtime.forEach((item) => {
+            var month = new Date(String(item.date)).getMonth();
+            if (item.status == 3 && item.status == 1) {
+              this.report[month].count -= 1;
+              this.report[month].refund =
+                this.report[month].refund + parseFloat(item.amount);
+              this.report[month].online_payment =
+                this.report[month].online_payment - parseFloat(item.amount);
+            }
+            if (item.mode == 3 && item.status == 2) {
+              var amount = item.fees;
+              if (!amount) {
+                amount = 0;
+              }
+              this.report[month].fee =
+                this.report[month].fee + parseFloat(amount);
+            }
+            if (item.mode == 3 && item.status == 2) {
+              this.report[month].count += 1;
+              this.report[month].online_payment =
+                this.report[month].online_payment + parseFloat(item.amount);
+            }
+            if (item.mode == 6 && item.status == 2) {
+              this.report[month].subscription =
+                this.report[month].subscription + parseFloat(item.amount);
+            }
+            if (item.mode == 6 && item.status == 1) {
+              this.report[month].subRefund =
+                this.report[month].subRefund + parseFloat(item.amount);
+              this.report[month].subscription =
+                this.report[month].subscription - parseFloat(item.amount);
+            }
+            if (item.mode == 4 && item.status == 2) {
+              this.report[month].offlineCount += 1 
+              this.report[month].offline_payment =
+                this.report[month].offline_payment + parseFloat(item.amount);
+            }
+            if (item.mode == 1 && item.status == 1) {
+              this.report[month].inflowCount += 1 
+              this.report[month].wallet_inflow =
+                this.report[month].wallet_inflow + parseFloat(item.amount);
+            }
+          });
+        });
+    },
+    getAirtimeHistoryNotPaginated() {
+      this.$store
+        .dispatch(
+          "get",
+          `airtime/all/${this.$store.state.user.id}`
+        )
+        .then((resp) => {
+          console.log(resp);
+          var allAirtimeHistory = resp.data.airtime;
+          allAirtimeHistory.forEach((item) => {
+            var month = new Date(String(item.updatedAt)).getMonth();
+            console.log(item);
+            if (item.status === 1) {
+              console.log(item.commission);
+             this.report[month].airtimeRevenue =
+                this.report[month].airtimeRevenue + item.commission
+            }
+          });
         });
     },
     getDoubleDebitHistory(page) {
@@ -745,6 +832,7 @@ export default {
     this.getTermiiHistory();
     this.getRefundsHistory();
     this.getAirtimeHistory();
+    this.getAirtimeHistoryNotPaginated();
     this.getDoubleDebitHistory();
   },
 };
