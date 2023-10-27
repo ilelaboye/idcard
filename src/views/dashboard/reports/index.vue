@@ -190,8 +190,7 @@
                         {{
                           formatPrice(
                             roundUpAmount(
-                              parseFloat(item.airtimeRevenue) -
-                                parseFloat(calculateVAT(item.airtimeRevenue))
+                              parseFloat(item.airtimeRevenue)
                             )
                           )
                         }}
@@ -201,8 +200,7 @@
                           formatPrice(
                             roundUpAmount(
                               calculateVAT(item.fee) +
-                                calculateVAT(item.subscription) + 
-                                calculateVAT(item.airtimeRevenue) 
+                                calculateVAT(item.subscription)  
                             )
                           )
                         }}
@@ -710,9 +708,8 @@ export default {
             var month = new Date(String(item.updatedAt)).getMonth();
             console.log(item);
             if (item.status === 1) {
-              console.log(item.commission);
              this.report[month].airtimeRevenue =
-                this.report[month].airtimeRevenue + item.commission
+                this.report[month].airtimeRevenue + item.amount
             }
           });
         });
