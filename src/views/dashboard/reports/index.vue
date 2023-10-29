@@ -800,6 +800,10 @@ export default {
               this.report[month].subscription =
                 this.report[month].subscription + parseFloat(item.amount);
             }
+            if (item.mode == 7 && item.status == 1) {
+              this.report[month].fee =
+                this.report[month].fee - parseFloat(item.amount);
+            }
             if (item.mode == 6 && item.status == 1) {
               this.report[month].subRefund =
                 this.report[month].subRefund + parseFloat(item.amount);
