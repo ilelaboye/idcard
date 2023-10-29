@@ -709,7 +709,7 @@ export default {
             console.log(item);
             if (item.status === 1) {
              this.report[month].airtimeRevenue =
-                this.report[month].airtimeRevenue + item.amount
+                this.report[month].airtimeRevenue + parseFloat(item.amount)
             }
           });
         });
