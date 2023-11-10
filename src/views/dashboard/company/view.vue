@@ -518,6 +518,9 @@
                       v-else-if="item.status == 9"
                       >Processing</span
                     >
+                    <span class="badge badge-danger" v-else-if="item.status == 11"
+                      >Cancelled</span
+                    >
                     <span
                       class="badge badge-danger"
                       v-else-if="item.status == 99"
