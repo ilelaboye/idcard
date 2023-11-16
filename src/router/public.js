@@ -1,14 +1,20 @@
+import Register from "../views/public/register.vue";
 import Login from "../views/public/login.vue";
 
 const publicRoutes = [
   {
     path: "",
-    redirect: "/login",
+    redirect: "/register",
   },
   {
-    path: "/login",
+    path: "/admin/login",
     name: "login",
     component: Login,
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: Register,
   },
 ];
 export default publicRoutes;

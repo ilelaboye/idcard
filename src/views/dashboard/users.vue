@@ -1,59 +1,17 @@
 <template>
   <div class="dashboard py-3 px-2" v-if="loaded">
     <div class="container-fluid">
-      <h6 class="card-title">Dashboard</h6>
-      <div class="row statistics">
-        <div class="col-sm-3 mb-3">
-          <div class="card">
-            <a href="javascript:void()" class="d-flex">
-              <div class="stat-no">
-                <h6>{{ formatPrice(roundUpAmount()) }}</h6>
-                <p class="text-muted">Total Users</p>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-3 mb-3">
-          <div class="card">
-            <a href="javascript:void()" class="d-flex">
-              <div class="stat-no">
-                <h6>{{ formatPrice(users.length) }}</h6>
-                <p class="text-muted">Pending Users</p>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-3 mb-3">
-          <div class="card">
-            <a href="javascript:void()" class="d-flex">
-              <div class="stat-no">
-                <h6>{{ formatPrice(roundUpAmount()) }}</h6>
-                <p class="text-muted">Approved Users</p>
-              </div>
-            </a>
-          </div>
-        </div>
-        <div class="col-sm-3 mb-3">
-          <div class="card">
-            <a href="javascript:void()" class="d-flex">
-              <div class="stat-no">
-                <h6>{{ formatPrice(roundUpAmount(0)) }}</h6>
-                <p class="text-muted">Rejected User</p>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-
+      <h6 class="card-title">Users</h6>
       <div class="card">
         <div class="card-body">
-          <h6>Pending</h6>
+          <h6>Users</h6>
           <div class="table-responsive">
             <table class="table">
               <thead>
                 <tr>
                   <th>First Name</th>
                   <th>Last Name</th>
+                  <th>Card No</th>
                   <th>Phone</th>
                   <th>NIN</th>
                   <th>DOB</th>
@@ -61,13 +19,14 @@
                   <th>Gender</th>
                   <th>Image</th>
                   <th>Passport</th>
-                  <th>Action</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(item, index) in users" :key="index">
                   <td>{{ item.first_name }}</td>
                   <td>{{ item.last_name }}</td>
+                  <td>{{ item.card_number }}</td>
                   <td>{{ item.phone }}</td>
                   <td>{{ item.nin }}</td>
                   <td>{{ item.date_of_birth }}</td>
@@ -94,17 +53,15 @@
                     </a>
                   </td>
                   <td>
-                    <div class="d-flex">
-                      <button
-                        class="btn btn-primary f-12 me-1"
-                        @click="approveUser(item.id)"
-                      >
-                        Approve
-                      </button>
-                      <button class="btn btn-outline-danger f-12">
-                        Reject
-                      </button>
-                    </div>
+                    <span v-if="item.status == 1" class="badge badge-success"
+                      >Approved</span
+                    >
+                    <span v-if="item.status == 2" class="badge badge-danger"
+                      >Rejected</span
+                    >
+                    <span v-if="item.status == 0" class="badge badge-primary"
+                      >Pending</span
+                    >
                   </td>
                 </tr>
               </tbody>
@@ -117,15 +74,10 @@
 </template>
 
 <script>
-  import { mapState } from "vuex";
+  //   import { mapState } from "vuex";
   // import AreaChart from "@/components/dashboard/charts/AreaChart";
   // import merchants from "@/components/dashboard/merchants";
   export default {
-    computed: {
-      ...mapState({
-        user: (context) => context.user,
-      }),
-    },
     // components: { AreaChart },
     data() {
       return {
@@ -138,7 +90,7 @@
     methods: {
       getUsers() {
         this.$store.commit("setLoader", true);
-        this.$store.dispatch("get", `get-users`).then((resp) => {
+        this.$store.dispatch("get", `get-all-users`).then((resp) => {
           this.loaded = true;
           this.$store.commit("setLoader", false);
           console.log(resp);

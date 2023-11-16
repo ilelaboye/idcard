@@ -10,7 +10,6 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     endpoint: process.env.VUE_APP_ENDPOINT,
-    base_url: process.env.VUE_APP_BASE_URL,
     // notification: {
     //   type: 0,
     //   message: "",
@@ -18,8 +17,6 @@ const store = new Vuex.Store({
     user: null,
     token: "",
     loader: false,
-    cart: [],
-    jumiaSearch: "office accessories",
   },
   getters,
   mutations,

@@ -4,36 +4,40 @@ import axios from "axios";
 export default {
   handleError(context, error) {
     console.log(error);
+
     if (error.request.status == 422) {
       var resp = JSON.parse(error.request.response);
+
       var err = resp.errors;
+      console.log("fff");
+      console.log(err);
       var msg = "";
       for (var item in err) {
         msg = err[item][0];
-        break; // it picks the first error ;
+        break;
       }
       console.log(msg);
-      window.SweetAlert("error", msg);
-      // return msg;
-    } else if (error.request.status == 403) {
-      window.SweetAlert("error", error.request.response);
-      window.SweetAlert("error", resp.error);
+      window.ToasterAlert("error", msg);
+      return msg;
+    } else if (error.request.status == 303) {
+      resp = JSON.parse(error.request.response);
+      window.ToasterAlert("error", resp.error);
     } else if (error.request.status == 404) {
       resp = JSON.parse(error.request.response);
       msg = "Request not found";
-      window.SweetAlert("error", msg);
+      window.ToasterAlert("error", msg);
     } else if (error.request.status == 400) {
       resp = JSON.parse(error.request.response);
-      err = resp.errors;
-      msg = err[0].msg + ": " + err[0].param.replace("_", " ");
-      console.log(msg);
-      window.SweetAlert("error", msg);
+      msg = resp.message;
+      window.ToasterAlert("error", msg);
     } else if (error.request.status == 401) {
-      window.SweetAlert("error", error.request.response);
-      // context.commit('logout');
+      resp = JSON.parse(error.request.response);
+      msg = resp.message;
+      window.ToasterAlert("error", msg);
+      // context.commit("logout");
     } else {
       msg = "Oops! server error, Please try again";
-      window.SweetAlert("error", msg);
+      window.ToasterAlert("error", msg);
     }
   },
   post(context, data) {
