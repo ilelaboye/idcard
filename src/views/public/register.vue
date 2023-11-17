@@ -137,7 +137,7 @@
                       class="form-control"
                       id="image"
                       accept="image/*"
-                      capture
+                      capture="user"
                     />
                   </div>
                 </div>

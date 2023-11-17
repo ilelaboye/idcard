@@ -20,14 +20,7 @@
               {{ $store.state.user.last_name }}</span
             >
           </div> -->
-          <div class="icon-tp">
-            <div class="icon-dot"></div>
-            <i data-feather="mail"></i>
-          </div>
-          <router-link class="icon-tp" to="/notifications">
-            <div class="icon-dot"></div>
-            <i data-feather="bell"></i>
-          </router-link>
+
           <div class="nav-user-icon">
             <img class="w-100" src="@/assets/img/user.png" alt="" />
           </div>
