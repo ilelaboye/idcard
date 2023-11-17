@@ -88,6 +88,9 @@ table tbody tr td {
   box-shadow: none !important;
   border-color: #ced4da !important;
 }
+.text-primary {
+  color: #012538 !important;
+}
 .btn-primary {
   background: #012538 !important;
   border-color: #012538;

@@ -1,15 +1,22 @@
 import Register from "../views/public/register.vue";
-import Login from "../views/public/login.vue";
+import AdminLogin from "../views/public/login.vue";
+import Verify from "../views/public/verify.vue";
 
 const publicRoutes = [
   {
     path: "",
-    redirect: "/register",
+    component: Verify,
+    name: "verify",
+  },
+  {
+    path: "/verify",
+    component: Verify,
+    name: "verify",
   },
   {
     path: "/admin/login",
-    name: "login",
-    component: Login,
+    name: "AdminLogin",
+    component: AdminLogin,
   },
   {
     path: "/register",

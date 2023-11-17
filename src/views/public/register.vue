@@ -120,8 +120,13 @@
                 </div>
                 <div class="col-sm-6 col-12">
                   <div class="form-group">
-                    <label for="passp">International Passport</label>
-                    <input type="file" class="form-control" id="passport" />
+                    <label for="passport">International Passport</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      v-model="user.passport"
+                      id="passport"
+                    />
                   </div>
                 </div>
                 <div class="col-sm-6 col-12">
@@ -169,6 +174,7 @@
           date_of_birth: "",
           height: "",
           place_of_birth: "",
+          passport: "",
         },
         loading: false,
       };
@@ -186,15 +192,11 @@
         form.append("date_of_birth", this.user.date_of_birth);
         form.append("height", this.user.height);
         form.append("place_of_birth", this.user.place_of_birth);
+        form.append("passport", this.user.passport);
 
-        var passport = document.getElementById("passport").files[0];
         var image = document.getElementById("image").files[0];
-
-        form.append("passport", passport);
         form.append("image", image);
 
-        console.log(passport);
-        console.log(image);
         this.$store
           .dispatch("post", { endpoint: "register", details: form })
           .then((resp) => {
@@ -210,10 +212,8 @@
             this.user.height = "";
             this.user.place_of_birth = "";
             console.log(resp);
-            window.SweetAlert(
-              "success",
-              "Details submitted successfully, please wait for admin verification"
-            );
+            window.ToasterAlert("success", "Details submitted successfully");
+            window.location.href = `/verify?code=${resp.data.card_number}`;
           })
           .catch(() => {
             this.loading = false;
