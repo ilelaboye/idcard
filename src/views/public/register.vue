@@ -132,13 +132,29 @@
                 <div class="col-sm-6 col-12">
                   <div class="form-group">
                     <label for="">Image</label>
-                    <input
+                    <image-uploader
+                      :debug="1"
+                      :maxWidth="512"
+                      :quality="0.7"
+                      :autoRotate="true"
+                      outputFormat="verbose"
+                      :preview="false"
+                      :className="[
+                        'fileinput',
+                        { 'fileinput--loaded': hasImage },
+                      ]"
+                      capture="environment"
+                      accept="image/*"
+                      doNotResize="['gif', 'svg']"
+                      @input="setImage"
+                    ></image-uploader>
+                    <!-- <input
                       type="file"
                       class="form-control"
                       id="image"
                       accept="image/*"
                       capture="user"
-                    />
+                    /> -->
                   </div>
                 </div>
               </div>
@@ -161,6 +177,7 @@
 </template>
 
 <script>
+  import ImageUploader from "vue-image-upload-resize";
   export default {
     data() {
       return {
@@ -177,9 +194,19 @@
           passport: "",
         },
         loading: false,
+        image: "",
+        hasImage: false,
       };
     },
+    components: {
+      ImageUploader,
+    },
     methods: {
+      setImage(file) {
+        this.image = file.dataUrl;
+        this.hasImage = true;
+        console.log(file);
+      },
       register() {
         this.loading = true;
         var form = new FormData();
@@ -194,8 +221,8 @@
         form.append("place_of_birth", this.user.place_of_birth);
         form.append("passport", this.user.passport);
 
-        var image = document.getElementById("image").files[0];
-        form.append("image", image);
+        // var image = document.getElementById("image").files[0];
+        form.append("image", this.image);
 
         this.$store
           .dispatch("post", { endpoint: "register", details: form })
