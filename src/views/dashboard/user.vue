@@ -44,7 +44,9 @@
                   </tr>
                   <tr>
                     <td>Passport:</td>
-                    <td>{{ user.passport }}</td>
+                    <td>
+                      <div style="max-width: 200px">{{ user.passport }}</div>
+                    </td>
                   </tr>
                   <tr>
                     <td>Date of Birth:</td>

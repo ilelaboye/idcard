@@ -93,14 +93,14 @@
 </template>
 
 <script>
-  import { mapState } from "vuex";
+  // import { mapState } from "vuex";
   // import AreaChart from "@/components/dashboard/charts/AreaChart";
   // import merchants from "@/components/dashboard/merchants";
   export default {
     computed: {
-      ...mapState({
-        user: (context) => context.user,
-      }),
+      // ...mapState({
+      //   user: (context) => context.user,
+      // }),
     },
     // components: { AreaChart },
     data() {
